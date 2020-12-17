@@ -135,24 +135,37 @@
 
         <div class="article-content markdown-body">
             <p>这是一篇介绍为什么要用Docker的文章</p>
-<p>最近在工作中由于老板布置的任务需求，需要使用到Docker，所以想细致的了解学习一下Docker，总结了一些基础内容，分享给大家。</p>
+<p>最近在工作中由于老板布置的任务需求，需要使用到Docker，所以想细致的了解学习一下<strong>Docker</strong>，总结了一些基础内容，分享给大家。</p>
 <ol>
-<li>为什么需要Docker<br>Docker官方介绍(中文版)：<a class="link"   target="_blank" rel="noopener" href="http://www.docker-cn.com/what-docker#/developers" >http://www.docker-cn…<i class="fas fa-external-link-alt"></i></a></li>
+<li>为什么需要Docker<br>Docker<strong>官方介绍</strong>(中文版)：<a class="link"   target="_blank" rel="noopener" href="http://www.docker-cn.com/what-docker#/developers" >http://www.docker-cn…<i class="fas fa-external-link-alt"></i></a></li>
 </ol>
+<p>！<a class="link"   target="_blank" rel="noopener" href="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg"  title="Image">Docker图标<i class="fas fa-external-link-alt"></i></a></p>
 <blockquote>
 <p>Docker 是世界领先的软件容器平台。<br>开发人员利用 Docker 可以消除协作编码时“在我的机器上可正常工作”的问题。<br>运维人员利用 Docker 可以在隔离容器中并行运行和管理应用，获得更好的计算密度。<br>企业利用 Docker 可以构建敏捷的软件交付管道，以更快的速度、更高的安全性和可靠的信誉为 Linux 和 Windows Server 应用发布新功能</p>
 </blockquote>
 <ul>
-<li>环境(切换/配置)繁琐<br>一般我们写程序的，能接触到好几个环境：</li>
+<li>环境(切换/配置)繁琐<br>一般我们写程序的，能接触到好几个<strong>环境</strong>：</li>
 </ul>
 <p>自己写代码的环境叫做开发环境。<br>给测试去跑的环境叫做测试环境。<br>测试完可以对外使用的叫做生产环境。<br>其实我们在学习编程中，很多时间都浪费在“环境”上：</p>
-<p>· 如果我现在重装了系统，我想要跑我的war/jar包，我得去安装一下JDK、Tomcat、MySQL等配置各种的环境变量才能跑起来。<br>· 开开心心地跟着博主给出的步骤去写Demo，但总是有Bug。(这里我将版本/依赖也归纳在环境的范畴里边)。<br>· 好不容易在测试环境下跑起来了，在生产环境就各种出错！<br>· 跟着教学视频做分布式/集群的项目，跑一堆的虚拟机，每个虚拟机都要安装对应的环境。</p>
+<ul>
+<li>如果我现在重装了系统，我想要跑我的war/jar包，我得去安装一下JDK、Tomcat、MySQL等配置各种的环境变量才能跑起来。</li>
+<li>开开心心地跟着博主给出的步骤去写Demo，但总是有Bug。(这里我将版本/依赖也归纳在环境的范畴里边)。</li>
+<li>好不容易在测试环境下跑起来了，在生产环境就各种出错！</li>
+<li>跟着教学视频做分布式/集群的项目，跑一堆的虚拟机，每个虚拟机都要安装对应的环境。</li>
+</ul>
 <p>所以就有个笑话《千万不要跟程序员说，你的代码有bug》：</p>
-<p>· 他的第一反应是你的环境有问题，第二就是你是傻逼不会用吧。<br>· 你要跟他这么说：“这个程序运行的怎么运行的跟预期不一样，是我操作有问题吗？”。<br>· 这货就会第一反应“我擦，这是不是出bug了？”</p>
+<ul>
+<li>他的第一反应是你的环境有问题，第二就是你是傻逼不会用吧。</li>
+<li>你要跟他这么说：“这个程序运行的怎么运行的跟预期不一样，是我操作有问题吗？”。</li>
+<li>这货就会第一反应“我擦，这是不是出bug了？”</li>
+</ul>
 <ul>
 <li>应用间需要隔离<br>比如我写了两个应用(网站)，这两个应用部署在同一台服务器上，那可能会出现什么问题？</li>
 </ul>
-<p>· 如果一个应用出现了问题，导致CPU占100%。那另一个应用也会受到关联，跟着一起凉凉了。<br>· 这两个应用是完全不同技术栈的应用，比如一个PHP，一个.NET。这两个应用各种的依赖软件都安装在同一个服务器上，可能就会造成各种冲突/无法兼容，这可能调试就非常麻烦了。</p>
+<ul>
+<li>如果一个应用出现了问题，导致CPU占100%。那另一个应用也会受到关联，跟着一起凉凉了。</li>
+<li>这两个应用是完全不同技术栈的应用，比如一个PHP，一个.NET。这两个应用各种的依赖软件都安装在同一个服务器上，可能就会造成各种冲突/无法兼容，这可能调试就非常麻烦了。</li>
+</ul>
 
         </div>
 
