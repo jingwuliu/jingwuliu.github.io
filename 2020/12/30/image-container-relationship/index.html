@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020/12 | Hexo</title>
+  <title>Docker镜像、容器和仓库 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2020/12/index.html">
+  <meta name="description" content="本文将讲解在docker中镜像和容器概念以及两者间的关系。  docker镜像   docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。   根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker镜像、容器和仓库">
+<meta property="og:url" content="http://example.com/2020/12/30/image-container-relationship/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文将讲解在docker中镜像和容器概念以及两者间的关系。  docker镜像   docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。   根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image1.png">
+<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image2.png">
+<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image3.png">
+<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_container1.png">
+<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_container2.png">
+<meta property="article:published_time" content="2020-12-30T13:28:33.000Z">
+<meta property="article:modified_time" content="2020-12-31T02:11:56.504Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,184 +160,199 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-image-container-relationship" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Docker镜像、容器和仓库
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/30/image-container-relationship/" class="archive-article-date">
+
+        
+        <a href="/2020/12/30/image-container-relationship/" class="archive-article-date">
   	<time datetime="2020-12-30T13:28:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-30</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/30/image-container-relationship/">Docker镜像、容器和仓库</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文将讲解在docker中镜像和容器概念以及两者间的关系。</p>
+<ol>
+<li>docker镜像</li>
+</ol>
+<blockquote>
+<p>docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。<br>
+<img src="/2020/12/30/image-container-relationship/docker_image1.png" alt></p>
+</blockquote>
+<p>根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。<br>
+每一层都包括了一直指向父层的指针。如果一个层没有这个指针，说明它处于最底层。<br>
+<img src="/2020/12/30/image-container-relationship/docker_image2.png" alt></p>
+<p>镜像是一堆只读层的统一视角，这些只读层重叠在一起，除了最下面一层，其他层都会有一个指针指向下一层。统一文件系统(Union File System)技术能够将不同的层整合成一个文件系统。在用户角度看，只存在一个文件系统。镜像每一层都是只读层。<br>
+<img src="/2020/12/30/image-container-relationship/docker_image3.png" alt></p>
+<ol start="2">
+<li>docker容器</li>
+</ol>
+<blockquote>
+<p>docker容器是由docker镜像创建的运行实例，容器也是一堆层的统一视角，不过容器最上面那一层是可读写的。即<br>
+容器 = 镜像 + 可读写层<br>
+<img src="/2020/12/30/image-container-relationship/docker_container1.png" alt></p>
+</blockquote>
+<p>一个容器中的进程可以对文件进行创建、修改、删除，这些改变都作用于可读写层。<br>
+<img src="/2020/12/30/image-container-relationship/docker_container2.png" alt></p>
+<p>docker容器类似虚拟机，只不过相对于虚拟机，docker守护进程可以直接与主操作系统进行通信，为各个docker容器分配资源，并保证每个容器都可以相互隔离独立，由于docker容器无需臃肿的从操作系统，docker可以节省大量的磁盘空间和其他系统资源。</p>
+<ol start="3">
+<li>docker仓库</li>
+</ol>
+<blockquote>
+<p>docker仓库就是用来存放镜像的位置，docker运作中使用的默认仓库是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/">docker hub公共仓库</a>，当用户创建了自己的镜像之后可以用push命令将它上传到共有或私有的仓库。这样下一次再需要使用该镜像时直接使用pull从仓库拉下来就可以了。</p>
+</blockquote>
+<p>本文部分内容借鉴于：浪仙(<a target="_blank" rel="noopener" href="https://www.cnblogs.com/LangXian/">https://www.cnblogs.com/LangXian/</a>)</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/30/image-container-relationship/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/30/docker-method/" class="archive-article-date">
-  	<time datetime="2020-12-30T08:35:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/30/docker-method/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">docker常用基本操作</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/30/docker-method/">docker常用基本操作</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/17/jenkins/" class="archive-article-date">
-  	<time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-17</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/17/jenkins/">Jenkins+Docker+Selenium使用过程中碰到的一些问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/17/docker-value/" class="archive-article-date">
-  	<time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/17/docker-value/">为什么需要Docker?</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/17/joeTest/" class="archive-article-date">
-  	<time datetime="2020-12-17T02:31:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/17/joeTest/">joeTest</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/16/hello-world/" class="archive-article-date">
-  	<time datetime="2020-12-16T09:38:59.395Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/16/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -350,8 +375,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
