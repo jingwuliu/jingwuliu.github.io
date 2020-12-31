@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>Joe Liu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Joe Liu的博客">
 <meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Joe Liu的博客">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Joe">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -43,7 +43,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/profile.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -101,7 +101,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/profile.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -174,36 +174,15 @@
       
         <p>本文将讲解在docker中镜像和容器概念以及两者间的关系。</p>
 <ol>
-<li>docker镜像</li>
-</ol>
-<blockquote>
-<p>docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。<br>
-<img src="/2020/12/30/image-container-relationship/docker_image1.png" alt></p>
+<li>docker镜像<blockquote>
+<p>docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。</p>
 </blockquote>
-<p>根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。<br>
-每一层都包括了一直指向父层的指针。如果一个层没有这个指针，说明它处于最底层。<br>
-<img src="/2020/12/30/image-container-relationship/docker_image2.png" alt></p>
-<p>镜像是一堆只读层的统一视角，这些只读层重叠在一起，除了最下面一层，其他层都会有一个指针指向下一层。统一文件系统(Union File System)技术能够将不同的层整合成一个文件系统。在用户角度看，只存在一个文件系统。镜像每一层都是只读层。<br>
-<img src="/2020/12/30/image-container-relationship/docker_image3.png" alt></p>
-<ol start="2">
-<li>docker容器</li>
+</li>
 </ol>
-<blockquote>
-<p>docker容器是由docker镜像创建的运行实例，容器也是一堆层的统一视角，不过容器最上面那一层是可读写的。即<br>
-容器 = 镜像 + 可读写层<br>
-<img src="/2020/12/30/image-container-relationship/docker_container1.png" alt></p>
-</blockquote>
-<p>一个容器中的进程可以对文件进行创建、修改、删除，这些改变都作用于可读写层。<br>
-<img src="/2020/12/30/image-container-relationship/docker_container2.png" alt></p>
-<p>docker容器类似虚拟机，只不过相对于虚拟机，docker守护进程可以直接与主操作系统进行通信，为各个docker容器分配资源，并保证每个容器都可以相互隔离独立，由于docker容器无需臃肿的从操作系统，docker可以节省大量的磁盘空间和其他系统资源。</p>
-<ol start="3">
-<li>docker仓库</li>
-</ol>
-<blockquote>
-<p>docker仓库就是用来存放镜像的位置，docker运作中使用的默认仓库是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/">docker hub公共仓库</a>，当用户创建了自己的镜像之后可以用push命令将它上传到共有或私有的仓库。这样下一次再需要使用该镜像时直接使用pull从仓库拉下来就可以了。</p>
-</blockquote>
-<p>本文部分内容借鉴于：浪仙(<a target="_blank" rel="noopener" href="https://www.cnblogs.com/LangXian/">https://www.cnblogs.com/LangXian/</a>)</p>
-
+<p><img src="/2020/12/30/image-container-relationship/docker_image1.png"></p>
+        
+          <a class="article-more-a" href="/2020/12/30/image-container-relationship/#more">more >></a>
+        
       
 
       
@@ -267,66 +246,14 @@
       
         <p>本文会总结一些docker的基础用法。</p>
 <ol>
-<li>docker search(根据关键词搜索镜像文件)</li>
-</ol>
-<blockquote>
-<p>docker search ubuntu #查看包含“ubuntu”的image的名称<br>
-<img src="/2020/12/30/docker-method/docker_search.png" alt="docker search ubuntu"></p>
+<li>docker search(根据关键词搜索镜像文件)<blockquote>
+<p>docker search ubuntu #查看包含“ubuntu”的image的名称<br><img src="/2020/12/30/docker-method/docker_search.png" alt="docker search ubuntu"></p>
 </blockquote>
-<ol start="2">
-<li>docker pull(下载镜像到本地)</li>
-</ol>
-<blockquote>
-<p>docker pull ubuntu    #下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自由选择下载镜像的版本，如ubuntu:15.10)。<br>
-<img src="/2020/12/30/docker-method/docker_pull.png" alt="docker pull ubuntu"></p>
-</blockquote>
-<ol start="3">
-<li>docker images(查看本地jenkins所有镜像)</li>
-</ol>
-<blockquote>
-<p>docker images           #列出本地所有镜像及其信息(标签，镜像ID，创建时间，镜像大小)<br>
-<img src="/2020/12/30/docker-method/docker_images.png" alt="docker images"></p>
-</blockquote>
-<ol start="4">
-<li>docker rmi(删除镜像)</li>
-</ol>
-<blockquote>
-<p>docker rmi ubuntu       #删除本地ubuntu镜像<br>
-<img src="/2020/12/30/docker-method/docker_rmi.png" alt="docker rmi ubuntu"></p>
-</blockquote>
-<ol start="5">
-<li>docker run(运行并启动一个新的容器)</li>
-</ol>
-<blockquote>
-<p>docker run -it ubuntu   #运行并启动一个ubuntu(如检测到本地无所需镜像，将先下载后再创建启动容器)<br>
-部分常用参数如下</p>
-</blockquote>
-<ul>
-<li>-i: 以交互模式运行容器，通常与-t同时使用；</li>
-<li>-t: 为容器重新分配一个伪输入终端，通常与-i同时使用；</li>
-<li>-p: 指定端口映射，格式为主机端口:容器端口</li>
-<li>-d: 后台运行容器，并返回容器ID；</li>
-<li>-P: 随机端口映射，容器内部端口随机映射到主机端口；</li>
-<li>–name=‘docker_test’:为容器指定一个名称；</li>
-<li>–volume,-v:绑定一个卷</li>
-</ul>
-<ol start="6">
-<li>
-<p>docker stop(停止一个容器的运行)<br>
-docker stop Container_ID        #停止相关容器运行</p>
-</li>
-<li>
-<p>docker rm(删除一个或多个容器)</p>
 </li>
 </ol>
-<blockquote>
-<p>docker rm Container_ID  #删除相关容器</p>
-</blockquote>
-<ol start="8">
-<li>docker ps(显示所有容器进程)<br>
-<img src="/2020/12/30/docker-method/docker_ps.png" alt="docker ps list"></li>
-</ol>
-
+        
+          <a class="article-more-a" href="/2020/12/30/docker-method/#more">more >></a>
+        
       
 
       
@@ -339,76 +266,6 @@ docker stop Container_ID        #停止相关容器运行</p>
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/12/30/docker-method/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-jenkins" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/17/jenkins/">Jenkins+Docker+Selenium使用过程中碰到的一些问题</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/17/jenkins/" class="archive-article-date">
-  	<time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。<br>
-接下来会分享一些我在工作过程中遇到的问题及解决方案</p>
-<ol>
-<li>Jenkins构建找不到python相关依赖</li>
-</ol>
-<blockquote>
-<p>我自己用的是python进行test case编写，但是在jenkins上进行测试时，发现总是提示找不到相应的import，后来发现我们在测试机上装的python相关依赖是在用户下的，而jenkins所在另外一个组，无法调用相关python依赖包，所以出现了相关错误。</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/17/jenkins/">展开全文 >></a>
         </p>
       
 
@@ -461,57 +318,12 @@ docker stop Container_ID        #停止相关容器运行</p>
         <p>这是一篇介绍为什么要用Docker的文章</p>
 <p>最近在工作中由于老板布置的任务需求，需要使用到Docker，所以想细致的了解学习一下<strong>Docker</strong>，总结了一些基础内容，分享给大家。</p>
 <ol>
-<li>为什么需要Docker<br>
-Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopener" href="http://www.docker-cn.com/what-docker#/developers">http://www.docker-cn…</a></li>
+<li>为什么需要Docker<br>Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopener" href="http://www.docker-cn.com/what-docker#/developers">http://www.docker-cn…</a></li>
 </ol>
-<p>！<a target="_blank" rel="noopener" href="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg" title="Image">Docker图标</a></p>
-<blockquote>
-<p>Docker 是世界领先的软件容器平台。<br>
-开发人员利用 Docker 可以消除协作编码时“在我的机器上可正常工作”的问题。<br>
-运维人员利用 Docker 可以在隔离容器中并行运行和管理应用，获得更好的计算密度。<br>
-企业利用 Docker 可以构建敏捷的软件交付管道，以更快的速度、更高的安全性和可靠的信誉为 Linux 和 Windows Server 应用发布新功能</p>
-</blockquote>
-<ul>
-<li>环境(切换/配置)繁琐<br>
-一般我们写程序的，能接触到好几个<strong>环境</strong>：</li>
-</ul>
-<p>自己写代码的环境叫做开发环境。<br>
-给测试去跑的环境叫做测试环境。<br>
-测试完可以对外使用的叫做生产环境。<br>
-其实我们在学习编程中，很多时间都浪费在“环境”上：</p>
-<ul>
-<li>如果我现在重装了系统，我想要跑我的war/jar包，我得去安装一下JDK、Tomcat、MySQL等配置各种的环境变量才能跑起来。</li>
-<li>开开心心地跟着博主给出的步骤去写Demo，但总是有Bug。(这里我将版本/依赖也归纳在环境的范畴里边)。</li>
-<li>好不容易在测试环境下跑起来了，在生产环境就各种出错！</li>
-<li>跟着教学视频做分布式/集群的项目，跑一堆的虚拟机，每个虚拟机都要安装对应的环境。</li>
-</ul>
-<p>所以就有个笑话《千万不要跟程序员说，你的代码有bug》：</p>
-<ul>
-<li>他的第一反应是你的环境有问题，第二就是你是傻逼不会用吧。</li>
-<li>你要跟他这么说：“这个程序运行的怎么运行的跟预期不一样，是我操作有问题吗？”。</li>
-<li>这货就会第一反应“我擦，这是不是出bug了？”</li>
-</ul>
-<ul>
-<li>应用间需要隔离<br>
-比如我写了两个应用(网站)，这两个应用部署在同一台服务器上，那可能会出现什么问题？</li>
-</ul>
-<ul>
-<li>如果一个应用出现了问题，导致CPU占100%。那另一个应用也会受到关联，跟着一起凉凉了。</li>
-<li>这两个应用是完全不同技术栈的应用，比如一个PHP，<a target="_blank" rel="noopener" href="http://xn--4gqvd.NET">一个.NET</a>。这两个应用各种的依赖软件都安装在同一个服务器上，可能就会造成各种冲突/无法兼容，这可能调试就非常麻烦了。</li>
-</ul>
-<p><strong>2.1 解决环境(切换/配置)</strong><br>
-不知道大家有没有装过系统，比如说装Linux虚拟机，重装Windows系统，都是需要镜像的。</p>
-<p>有了这个镜像，我们就可以<strong>运行</strong>这个镜像，来进行安装系统的操作(此处省略N个下一步)，于是我们的系统就装好了。一般来说，我们去官方渠道下载的镜像，都是<strong>纯净</strong>的。比如去官方下载Windows镜像，装完后之后桌面只有一个回收站。</p>
-<p>但有过了解装系统的同学可能就会知道，有的镜像装完可能还有360这些软件，但系统的的确确是变了。简单来说，就是这些镜像添加了其他的东西(比如360软件、腾讯、千千静听等等软件)。</p>
-<p>Docker也是这种思路，可以将我们的想要的环境<strong>构建</strong>(打包)成一个镜像，然后我们可以<strong>推送</strong>(发布)到网上去。想要用这个环 境的时候，在网上拉取一份就好了。</p>
-<p>有了Docker，我们在搭环境的时候，跟以前的方式就不一样了。</p>
-<ul>
-<li><strong>之前</strong>：在开发环境构建出了一个war包，想跑到Linux下运行。我们得先在Linux下载好Java、Tomcat、MySQL，配置好对应的环境变量，将war包丢到Tomcat的webapps文件夹下，才能跑起来。</li>
-<li><strong>现在</strong>：在Linux下直接拉取一份镜像(各种环境都配好了)，将镜像运行起来，把war包丢进去就好了。</li>
-</ul>
-<p><strong>2.2 解决应用之间隔离</strong><br>
-说到这里，就得提出一个大家可能不认识的概念：LXC(Linux Containers)—&gt;Linux容器。</p>
-
+<p><img src="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg" alt="Docker图标" title="Image"></p>
+        
+          <a class="article-more-a" href="/2020/12/17/docker-value/#more">more >></a>
+        
       
 
       
@@ -553,117 +365,33 @@ Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopene
 
 
   
-    <article id="post-joeTest" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-jenkins" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/17/joeTest/">joeTest</a>
+      <a class="article-title" href="/2020/12/17/jenkins/">Jenkins+Docker+Selenium使用过程中碰到的一些问题</a>
     </h1>
   
 
         
-        <a href="/2020/12/17/joeTest/" class="archive-article-date">
-  	<time datetime="2020-12-17T02:31:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-17</time>
+        <a href="/2020/12/17/jenkins/" class="archive-article-date">
+  	<time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="标题二">标题二</h2>
-<h3 id="标题三">标题三</h3>
-<p><u>This is a test blog.</u></p>
-<hr>
-<ul>
-<li>第一项<br>
-[Link]:let me try(<a target="_blank" rel="noopener" href="https://www.baidu.com">https://www.baidu.com</a>)</li>
-</ul>
+        <p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。<br>接下来会分享一些我在工作过程中遇到的问题及解决方案</p>
 <ol>
-<li>大家好</li>
-<li>我就是想测试一下</li>
-<li>看看在hexo上能不能正常显示中文</li>
+<li>Jenkins构建找不到python相关依赖<blockquote>
+<p>我自己用的是python进行test case编写，但是在jenkins上进行测试时，发现总是提示找不到相应的import，后来发现我们在测试机上装的python相关依赖是在用户下的，而jenkins所在另外一个组，无法调用相关python依赖包，所以出现了相关错误。</p>
+</blockquote>
+</li>
 </ol>
-        
-          <a class="article-more-a" href="/2020/12/17/joeTest/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/17/joeTest/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/16/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/16/hello-world/" class="archive-article-date">
-  	<time datetime="2020-12-16T09:38:59.395Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
 
@@ -676,7 +404,7 @@ Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopene
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/16/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/12/17/jenkins/">展开全文 >></a>
         </p>
       
 
@@ -716,7 +444,7 @@ Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopene
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 John Doe
+    		&copy; 2020 Joe
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -724,6 +452,9 @@ Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopene
     </div>
   </div>
 </footer>
+
+<span id="busuanzi_container_site_pv">    本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+<span id="busuanzi_container_site_uv">  本站访客数<span id="busuanzi_value_site_uv"></span>人次</span>
     </div>
     <script>
 	var yiliaConfig = {
@@ -737,7 +468,7 @@ Docker<strong>官方介绍</strong>(中文版)：<a target="_blank" rel="noopene
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -747,6 +478,7 @@ if(!isFinite(o.call(this)))throw RangeError("Invalid time value");var t=this,n=t
 return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.get,u=e.key;e.exp({getOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(32),u=e.has,c=e.key,f=function(t,n,r){if(u(t,n,r))return!0;var e=o(n);return null!==e&&f(t,e,r)};e.exp({hasMetadata:function(t,n){return f(t,i(n),arguments.length<3?void 0:c(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=e.has,u=e.key;e.exp({hasOwnMetadata:function(t,n){return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){var e=r(54),i=r(2),o=r(26),u=e.key,c=e.set;e.exp({metadata:function(t,n){return function(r,e){c(t,n,(void 0!==e?i:o)(r),u(e))}}})},function(t,n,r){var e=r(1);e(e.P+e.R,"Set",{toJSON:r(165)("Set")})},function(t,n,r){"use strict";var e=r(1),i=r(147)(!0);e(e.P,"String",{at:function(t){return i(this,t)}})},function(t,n,r){"use strict";var e=r(1),i=r(46),o=r(16),u=r(122),c=r(120),f=RegExp.prototype,a=function(t,n){this._r=t,this._s=n};r(139)(a,"RegExp String",function(){var t=this._r.exec(this._s);return{value:t,done:null===t}}),e(e.P,"String",{matchAll:function(t){if(i(this),!u(t))throw TypeError(t+" is not a regexp!");var n=String(this),r="flags"in f?String(t.flags):c.call(t),e=new RegExp(t.source,~r.indexOf("g")?r:"g"+r);return e.lastIndex=o(t.lastIndex),new a(e,n)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padEnd:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!1)}})},function(t,n,r){"use strict";var e=r(1),i=r(181);e(e.P,"String",{padStart:function(t){return i(this,t,arguments.length>1?arguments[1]:void 0,!0)}})},function(t,n,r){"use strict";r(82)("trimLeft",function(t){return function(){return t(this,1)}},"trimStart")},function(t,n,r){"use strict";r(82)("trimRight",function(t){return function(){return t(this,2)}},"trimEnd")},function(t,n,r){r(153)("asyncIterator")},function(t,n,r){r(153)("observable")},function(t,n,r){var e=r(1);e(e.S,"System",{global:r(3)})},function(t,n,r){for(var e=r(155),i=r(28),o=r(3),u=r(27),c=r(80),f=r(7),a=f("iterator"),s=f("toStringTag"),l=c.Array,h=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],v=0;v<5;v++){var p,d=h[v],y=o[d],g=y&&y.prototype;if(g){g[a]||u(g,a,l),g[s]||u(g,s,d),c[d]=l;for(p in e)g[p]||i(g,p,e[p],!0)}}},function(t,n,r){var e=r(1),i=r(151);e(e.G+e.B,{setImmediate:i.set,clearImmediate:i.clear})},function(t,n,r){var e=r(3),i=r(1),o=r(121),u=r(207),c=e.navigator,f=!!c&&/MSIE .\./.test(c.userAgent),a=function(t){return f?function(n,r){return t(o(u,[].slice.call(arguments,2),"function"==typeof n?n:Function(n)),r)}:t};i(i.G+i.B+i.F*f,{setTimeout:a(e.setTimeout),setInterval:a(e.setInterval)})},function(t,n,r){r(330),r(269),r(271),r(270),r(273),r(275),r(280),r(274),r(272),r(282),r(281),r(277),r(278),r(276),r(268),r(279),r(283),r(284),r(236),r(238),r(237),r(286),r(285),r(256),r(266),r(267),r(257),r(258),r(259),r(260),r(261),r(262),r(263),r(264),r(265),r(239),r(240),r(241),r(242),r(243),r(244),r(245),r(246),r(247),r(248),r(249),r(250),r(251),r(252),r(253),r(254),r(255),r(317),r(322),r(329),r(320),r(312),r(313),r(318),r(323),r(325),r(308),r(309),r(310),r(311),r(314),r(315),r(316),r(319),r(321),r(324),r(326),r(327),r(328),r(231),r(233),r(232),r(235),r(234),r(220),r(218),r(224),r(221),r(227),r(229),r(217),r(223),r(214),r(228),r(212),r(226),r(225),r(219),r(222),r(211),r(213),r(216),r(215),r(230),r(155),r(302),r(307),r(184),r(303),r(304),r(305),r(306),r(287),r(183),r(185),r(186),r(342),r(331),r(332),r(337),r(340),r(341),r(335),r(338),r(336),r(339),r(333),r(334),r(288),r(289),r(290),r(291),r(292),r(295),r(293),r(294),r(296),r(297),r(298),r(299),r(301),r(300),r(343),r(369),r(372),r(371),r(373),r(374),r(370),r(375),r(376),r(354),r(357),r(353),r(351),r(352),r(355),r(356),r(346),r(368),r(377),r(345),r(347),r(349),r(348),r(350),r(359),r(360),r(362),r(361),r(364),r(363),r(365),r(366),r(367),r(344),r(358),r(380),r(379),r(378),t.exports=r(52)},function(t,n){function r(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var r=t.nextSibling;return r?t.parentNode.insertBefore(n,r):t.parentNode.appendChild(n)}t.exports=r},,,,,,,,,function(t,n,r){(function(n,r){!function(n){"use strict";function e(t,n,r,e){var i=n&&n.prototype instanceof o?n:o,u=Object.create(i.prototype),c=new p(e||[]);return u._invoke=s(t,r,c),u}function i(t,n,r){try{return{type:"normal",arg:t.call(n,r)}}catch(t){return{type:"throw",arg:t}}}function o(){}function u(){}function c(){}function f(t){["next","throw","return"].forEach(function(n){t[n]=function(t){return this._invoke(n,t)}})}function a(t){function n(r,e,o,u){var c=i(t[r],t,e);if("throw"!==c.type){var f=c.arg,a=f.value;return a&&"object"==typeof a&&m.call(a,"__await")?Promise.resolve(a.__await).then(function(t){n("next",t,o,u)},function(t){n("throw",t,o,u)}):Promise.resolve(a).then(function(t){f.value=t,o(f)},u)}u(c.arg)}function e(t,r){function e(){return new Promise(function(e,i){n(t,r,e,i)})}return o=o?o.then(e,e):e()}"object"==typeof r&&r.domain&&(n=r.domain.bind(n));var o;this._invoke=e}function s(t,n,r){var e=P;return function(o,u){if(e===F)throw new Error("Generator is already running");if(e===M){if("throw"===o)throw u;return y()}for(r.method=o,r.arg=u;;){var c=r.delegate;if(c){var f=l(c,r);if(f){if(f===A)continue;return f}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(e===P)throw e=M,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);e=F;var a=i(t,n,r);if("normal"===a.type){if(e=r.done?M:j,a.arg===A)continue;return{value:a.arg,done:r.done}}"throw"===a.type&&(e=M,r.method="throw",r.arg=a.arg)}}}function l(t,n){var r=t.iterator[n.method];if(r===g){if(n.delegate=null,"throw"===n.method){if(t.iterator.return&&(n.method="return",n.arg=g,l(t,n),"throw"===n.method))return A;n.method="throw",n.arg=new TypeError("The iterator does not provide a 'throw' method")}return A}var e=i(r,t.iterator,n.arg);if("throw"===e.type)return n.method="throw",n.arg=e.arg,n.delegate=null,A;var o=e.arg;return o?o.done?(n[t.resultName]=o.value,n.next=t.nextLoc,"return"!==n.method&&(n.method="next",n.arg=g),n.delegate=null,A):o:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,A)}function h(t){var n={tryLoc:t[0]};1 in t&&(n.catchLoc=t[1]),2 in t&&(n.finallyLoc=t[2],n.afterLoc=t[3]),this.tryEntries.push(n)}function v(t){var n=t.completion||{};n.type="normal",delete n.arg,t.completion=n}function p(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(h,this),this.reset(!0)}function d(t){if(t){var n=t[w];if(n)return n.call(t);if("function"==typeof t.next)return t;if(!isNaN(t.length)){var r=-1,e=function n(){for(;++r<t.length;)if(m.call(t,r))return n.value=t[r],n.done=!1,n;return n.value=g,n.done=!0,n};return e.next=e}}return{next:y}}function y(){return{value:g,done:!0}}var g,b=Object.prototype,m=b.hasOwnProperty,x="function"==typeof Symbol?Symbol:{},w=x.iterator||"@@iterator",S=x.asyncIterator||"@@asyncIterator",_=x.toStringTag||"@@toStringTag",O="object"==typeof t,E=n.regeneratorRuntime;if(E)return void(O&&(t.exports=E));E=n.regeneratorRuntime=O?t.exports:{},E.wrap=e;var P="suspendedStart",j="suspendedYield",F="executing",M="completed",A={},N={};N[w]=function(){return this};var T=Object.getPrototypeOf,I=T&&T(T(d([])));I&&I!==b&&m.call(I,w)&&(N=I);var k=c.prototype=o.prototype=Object.create(N);u.prototype=k.constructor=c,c.constructor=u,c[_]=u.displayName="GeneratorFunction",E.isGeneratorFunction=function(t){var n="function"==typeof t&&t.constructor;return!!n&&(n===u||"GeneratorFunction"===(n.displayName||n.name))},E.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,c):(t.__proto__=c,_ in t||(t[_]="GeneratorFunction")),t.prototype=Object.create(k),t},E.awrap=function(t){return{__await:t}},f(a.prototype),a.prototype[S]=function(){return this},E.AsyncIterator=a,E.async=function(t,n,r,i){var o=new a(e(t,n,r,i));return E.isGeneratorFunction(n)?o:o.next().then(function(t){return t.done?t.value:o.next()})},f(k),k[_]="Generator",k.toString=function(){return"[object Generator]"},E.keys=function(t){var n=[];for(var r in t)n.push(r);return n.reverse(),function r(){for(;n.length;){var e=n.pop();if(e in t)return r.value=e,r.done=!1,r}return r.done=!0,r}},E.values=d,p.prototype={constructor:p,reset:function(t){if(this.prev=0,this.next=0,this.sent=this._sent=g,this.done=!1,this.delegate=null,this.method="next",this.arg=g,this.tryEntries.forEach(v),!t)for(var n in this)"t"===n.charAt(0)&&m.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=g)},stop:function(){this.done=!0;var t=this.tryEntries[0],n=t.completion;if("throw"===n.type)throw n.arg;return this.rval},dispatchException:function(t){function n(n,e){return o.type="throw",o.arg=t,r.next=n,e&&(r.method="next",r.arg=g),!!e}if(this.done)throw t;for(var r=this,e=this.tryEntries.length-1;e>=0;--e){var i=this.tryEntries[e],o=i.completion;if("root"===i.tryLoc)return n("end");if(i.tryLoc<=this.prev){var u=m.call(i,"catchLoc"),c=m.call(i,"finallyLoc");if(u&&c){if(this.prev<i.catchLoc)return n(i.catchLoc,!0);if(this.prev<i.finallyLoc)return n(i.finallyLoc)}else if(u){if(this.prev<i.catchLoc)return n(i.catchLoc,!0)}else{if(!c)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return n(i.finallyLoc)}}}},abrupt:function(t,n){for(var r=this.tryEntries.length-1;r>=0;--r){var e=this.tryEntries[r];if(e.tryLoc<=this.prev&&m.call(e,"finallyLoc")&&this.prev<e.finallyLoc){var i=e;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=n&&n<=i.finallyLoc&&(i=null);var o=i?i.completion:{};return o.type=t,o.arg=n,i?(this.method="next",this.next=i.finallyLoc,A):this.complete(o)},complete:function(t,n){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&n&&(this.next=n),A},finish:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.finallyLoc===t)return this.complete(r.completion,r.afterLoc),v(r),A}},catch:function(t){for(var n=this.tryEntries.length-1;n>=0;--n){var r=this.tryEntries[n];if(r.tryLoc===t){var e=r.completion;if("throw"===e.type){var i=e.arg;v(r)}return i}}throw new Error("illegal catch attempt")},delegateYield:function(t,n,r){return this.delegate={iterator:d(t),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=g),A}}}("object"==typeof n?n:"object"==typeof window?window:"object"==typeof self?self:this)}).call(n,function(){return this}(),r(158))}])</script><script src="/./main.0cf68a.js"></script><script>!function(){!function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)}("/slider.e37972.js")}()</script>
 
 
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
