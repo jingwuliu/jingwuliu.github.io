@@ -4,22 +4,22 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>joeTest | Hexo</title>
+    <title>Jenkins+Docker+Selenium使用过程中碰到的一些问题 | Hexo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="John Doe">
     
 
     
-    <meta name="description" content="标题二标题三This is a test blog.   第一项[Link]:let me try(https:&#x2F;&#x2F;www.baidu.com)   大家好 我就是想测试一下 看看在hexo上能不能正常显示中文">
+    <meta name="description" content="describe some problems happened in the process of Jenkins">
 <meta property="og:type" content="article">
-<meta property="og:title" content="joeTest">
-<meta property="og:url" content="http://example.com/2020/12/17/joeTest/index.html">
+<meta property="og:title" content="Jenkins+Docker+Selenium使用过程中碰到的一些问题">
+<meta property="og:url" content="http://example.com/2020/12/17/jenkins/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="标题二标题三This is a test blog.   第一项[Link]:let me try(https:&#x2F;&#x2F;www.baidu.com)   大家好 我就是想测试一下 看看在hexo上能不能正常显示中文">
-<meta property="og:locale">
-<meta property="article:published_time" content="2020-12-17T02:31:35.000Z">
-<meta property="article:modified_time" content="2020-12-17T05:21:39.272Z">
+<meta property="og:description" content="describe some problems happened in the process of Jenkins">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-17T06:30:14.000Z">
+<meta property="article:modified_time" content="2020-12-29T09:02:11.692Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -85,14 +85,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2020/12/17/joeTest/" title="joeTest" itemprop="url">joeTest</a>
+      <a href="/2020/12/17/jenkins/" title="Jenkins+Docker+Selenium使用过程中碰到的一些问题" itemprop="url">Jenkins+Docker+Selenium使用过程中碰到的一些问题</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
 		
   <p class="article-time">
-    <time datetime="2020-12-17T02:31:35.000Z" itemprop="datePublished"> Published 2020-12-17</time>
+    <time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"> Published 2020-12-17</time>
     
   </p>
 </header>
@@ -101,39 +101,18 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">标题二</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98%E4%B8%89"><span class="toc-number">1.1.</span> <span class="toc-text">标题三</span></a></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><h3 id="标题三"><a href="#标题三" class="headerlink" title="标题三"></a>标题三</h3><p><u>This is a test blog.</u></p>
-<hr>
-<ul>
-<li>第一项<br>[Link]:let me try(<a class="link"   target="_blank" rel="noopener" href="https://www.baidu.com/" >https://www.baidu.com<i class="fas fa-external-link-alt"></i></a>)</li>
-</ul>
+		<p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。<br>接下来会分享一些我在工作过程中遇到的问题及解决方案</p>
 <ol>
-<li>大家好</li>
-<li>我就是想测试一下</li>
-<li>看看在hexo上能不能正常显示中文</li>
+<li>Jenkins构建找不到python相关依赖<blockquote>
+<p>我自己用的是python进行test case编写，但是在jenkins上进行测试时，发现总是提示找不到相应的import，后来发现我们在测试机上装的python相关依赖是在用户下的，而jenkins所在另外一个组，无法调用相关python依赖包，所以出现了相关错误。</p>
+</blockquote>
+</li>
 </ol>
-<a id="more"></a>
-
-<ol start="4">
-<li>大家好</li>
-<li>我就是想测试一下</li>
-<li>看看在hexo上能不能正常显示中文</li>
-</ol>
-<blockquote>
-<ul>
-<li>第二项</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>最外层</p>
-<blockquote>
-<p>第二层</p>
-</blockquote>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foo</span></span>()&#123;</span><br><span class="line">    console.log(<span class="string">&quot;This is Joe&#x27;s blog.&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -145,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://example.com/2020/12/17/joeTest/" data-title="joeTest | Hexo" data-tsina="" class="share clearfix">
+	  <div data-url="http://example.com/2020/12/17/jenkins/" data-title="Jenkins+Docker+Selenium使用过程中碰到的一些问题 | Hexo" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,18 +138,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2020/12/17/docker_method/" title="如何使用docker?">
+ <a href="/2020/12/17/docker-value/" title="为什么需要Docker?">
   <strong>上一篇：</strong><br/>
   <span>
-  如何使用docker?</span>
+  为什么需要Docker?</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2020/12/16/hello-world/"  title="Hello World">
+<a href="/2020/12/17/docker_method/"  title="如何使用docker?">
  <strong>下一篇：</strong><br/> 
- <span>Hello World
+ <span>如何使用docker?
 </span>
 </a>
 </div>
@@ -187,7 +166,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">标题二</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98%E4%B8%89"><span class="toc-number">1.1.</span> <span class="toc-text">标题三</span></a></li></ol></li></ol>
+ 
  
   </div>
 

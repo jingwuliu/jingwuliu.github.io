@@ -83,6 +83,55 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2020/12/30/docker-method/" title="docker_method" itemprop="url">docker_method</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2020-12-30T07:59:17.000Z" itemprop="datePublished"> Published 2020-12-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2020/12/17/docker-value/" title="为什么需要Docker?" itemprop="url">为什么需要Docker?</a>
   </h1>
   <p class="article-author">By
@@ -138,6 +187,118 @@
 <li><strong>现在</strong>：在Linux下直接拉取一份镜像(各种环境都配好了)，将镜像运行起来，把war包丢进去就好了。</li>
 </ul>
 <p><strong>2.2 解决应用之间隔离</strong><br>说到这里，就得提出一个大家可能不认识的概念：LXC(Linux Containers)—&gt;Linux容器。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/12/17/jenkins/" title="Jenkins+Docker+Selenium使用过程中碰到的一些问题" itemprop="url">Jenkins+Docker+Selenium使用过程中碰到的一些问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"> Published 2020-12-17</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。<br>接下来会分享一些我在工作过程中遇到的问题及解决方案</p>
+<ol>
+<li>Jenkins构建找不到python相关依赖<blockquote>
+<p>我自己用的是python进行test case编写，但是在jenkins上进行测试时，发现总是提示找不到相应的import，后来发现我们在测试机上装的python相关依赖是在用户下的，而jenkins所在另外一个组，无法调用相关python依赖包，所以出现了相关错误。</p>
+</blockquote>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/12/17/docker_method/" title="如何使用docker?" itemprop="url">如何使用docker?</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2020-12-17T06:30:14.000Z" itemprop="datePublished"> Published 2020-12-17</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>本文会总结一些docker的基础用法。</p>
+<ol>
+<li>根据关键词搜索image文件<blockquote>
+<p>docker search –help    #查看该命令的帮助信息<br>docker search ubuntu    #查看包含“ubuntu”的image的名称<br><img src="/.com//docker_search.png" alt="docker search ubuntu结果"></p>
+</blockquote>
+</li>
+</ol>
 
         
         
