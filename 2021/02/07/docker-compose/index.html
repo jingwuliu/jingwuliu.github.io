@@ -6,14 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: Container | Joe Liu的博客</title>
+  <title>docker-compose.yml的基础使用 | Joe Liu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Joe Liu的博客">
-<meta property="og:url" content="http://example.com/tags/Container/index.html">
+  <meta name="description" content="docker-compose.yml文件用来做项目编排，负责实现对Docker容器集群的快速编排，部署分布式应用，通过一个单独的yaml文件为一个项目来定义一组相关联的应用容器。文件中主要包含了使用各种镜像创建的容器服务，使用的镜像可以是网络上的，也可以是根据Dockerfile文件生成的。 一份标准docker-compose.yml配置文件应包含version、service、networks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker-compose.yml的基础使用">
+<meta property="og:url" content="http://example.com/2021/02/07/docker-compose/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
+<meta property="og:description" content="docker-compose.yml文件用来做项目编排，负责实现对Docker容器集群的快速编排，部署分布式应用，通过一个单独的yaml文件为一个项目来定义一组相关联的应用容器。文件中主要包含了使用各种镜像创建的容器服务，使用的镜像可以是网络上的，也可以是根据Dockerfile文件生成的。 一份标准docker-compose.yml配置文件应包含version、service、networks">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-07T09:20:58.000Z">
+<meta property="article:modified_time" content="2021-02-09T02:29:44.116Z">
 <meta property="article:author" content="Joe">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="docker-compose.yml">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
@@ -150,72 +156,188 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-docker-compose" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/30/image-container-relationship/" class="archive-article-date">
-  	<time datetime="2020-12-30T13:28:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/30/image-container-relationship/">Docker镜像、容器和仓库</a>
+    <h1 class="article-title" itemprop="name">
+      docker-compose.yml的基础使用
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/02/07/docker-compose/" class="archive-article-date">
+  	<time datetime="2021-02-07T09:20:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>docker-compose.yml文件用来做项目编排，负责实现对Docker容器集群的快速编排，部署分布式应用，通过一个单独的yaml文件为一个项目来定义一组相关联的应用容器。文件中主要包含了使用各种镜像创建的容器服务，使用的镜像可以是网络上的，也可以是根据Dockerfile文件生成的。</p>
+<p>一份标准docker-compose.yml配置文件应包含<strong>version</strong>、<strong>service</strong>、<strong>networks</strong>三部分，其中最关键的就是<em>service</em>和<em>networks</em>两部分。</p>
+<a id="more"></a>
+
+<ul>
+<li>services标签下的第二级标签的名字由用户自定义，其就为服务名称。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>services下的服务里仍然有需要方法可以执行，下面我们将选择部分进行介绍。</p>
+<ol>
+<li>image<br> image可以直接指定服务的镜像名称或ID。如果镜像在本地不存在，compose将会尝试拉取这个镜像。格式如下：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services: </span><br><span class="line">    vue-client: </span><br><span class="line">        image: hello-world </span><br><span class="line">        &#x2F;&#x2F;&#x2F;image: ubuntu:16.04 </span><br><span class="line">        &#x2F;&#x2F;&#x2F;image: a4bc65fd   </span><br></pre></td></tr></table></figure></li>
+<li>build<br> 服务也可以使用build基于一份Dockerfile，在使用docker-compose up启动时执行构建任务。Compose会利用提供的路径自动构建该镜像，然后使用这个镜像启动服务容器。如果你同时指定了image和build两个标签，那么Compose会构建镜像并且把镜像命名为image提供的名称。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services: </span><br><span class="line">    vue-client:</span><br><span class="line">        build: .&#x2F;build&#x2F;client</span><br></pre></td></tr></table></figure></li>
+<li>command<br> 使用command可以覆盖容器启动后默认执行的命令。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        command: [&quot;--replSet&quot;, &quot;rs0&quot;, &quot;--bind_ip_all&quot;]</span><br><span class="line">        &#x2F;&#x2F;&#x2F;command: --replSet rs0 --bind_ip_all</span><br></pre></td></tr></table></figure></li>
+<li>container_name<br> 该指令用于指定生成的容器的标签名。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        container_name: vue-client</span><br></pre></td></tr></table></figure></li>
+<li>env_file<br> 在docker-compose.yml中可以定义一个专门存放变量的文件。也可以通过docker-compose -f FILE的方式指定docker-compose.yml配置文件，相应的配置文件中的env_file也会使用配置文件路径。<ul>
+<li>docker-compose.yml<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        env_file: .env</span><br></pre></td></tr></table></figure></li>
+<li>.env<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MONGODB_DB_NAME&#x3D;release-test</span><br><span class="line">MEDA_DATA_PATH&#x3D;&#x2F;meda_data&#x2F;release_test&#x2F;images&#x2F;</span><br><span class="line">CLIENT_PORT&#x3D;3001:80</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>environment<br> 添加环境变量，可以使用数组或字典。作用就是为镜像设置变量，将变量保存到镜像中，由此镜像生成的容器同样也会包含这些变量设置。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    node-server:</span><br><span class="line">        environment:</span><br><span class="line">            MONGODB_URL: &quot;mongodb:&#x2F;&#x2F;mongo1:27017&quot;</span><br><span class="line">            MONGODB_DB_NAME: &quot;release-test-1&quot;</span><br></pre></td></tr></table></figure></li>
+<li>healthcheck<br> 用于检查测试服务使用的容器是否正常。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    mongo:</span><br><span class="line">       healthcheck:</span><br><span class="line">            test: [&quot;CMD&quot;,&quot;curl&quot;,&quot;-f&quot;,&quot;http:&#x2F;&#x2F;localhost&quot;]</span><br><span class="line">            interval: 15s</span><br><span class="line">            timeout: 10s</span><br><span class="line">            retries: 3</span><br><span class="line">            start_period: 10s</span><br></pre></td></tr></table></figure>
+ 其中interval、timeout、start_period都定位持续时间。test中的内容必须是字符串或列表。</li>
+<li>ports<br> 映射端口。可以使用HOST:CONTAINER的方式指定端口，可以指定容器和主机端口。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    file-server:</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;9950:80&quot;</span><br><span class="line">            - &quot;8090:8090&quot;</span><br></pre></td></tr></table></figure></li>
+<li>volumes<br> 挂载一个目录或已存在的数据卷容器，直接使用HOST:CONTAINER的格式。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- services:</span><br><span class="line">    engine-center:</span><br><span class="line">        volumes:</span><br><span class="line">            - &quot;&#x2F;meda_data&#x2F;release_test&#x2F;images:&#x2F;app&#x2F;meda_output&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">    mongo:</span><br><span class="line">        volumes:</span><br><span class="line">            - &quot;dbdata1:&#x2F;data&#x2F;db&quot;</span><br><span class="line"></span><br><span class="line">- volumes:</span><br><span class="line">    dbdata1:</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Image</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Container</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Docker Hub</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">docker-compose.yml</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/02/07/docker-compose/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2021/01/28/Jenkins-DingTalkPlugin/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Jenkins集成钉钉机器人实现在钉钉上发送任务信息</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -241,9 +363,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

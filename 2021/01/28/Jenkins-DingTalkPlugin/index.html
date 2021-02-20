@@ -6,23 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Jenkins���ɶ���������ʵ���ڶ����Ϸ���������Ϣ | Joe Liu的博客</title>
+  <title>Jenkins集成钉钉机器人实现在钉钉上发送任务信息 | Joe Liu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="���ڹ������󣬿���ʹ�ö��������˴����ʼ��Ĺ��ܷ���������Ϣ�������Լ�Ҳ��������һ���� ���ȶ�����������Ȼ����Ҫ�����ڶ���Ӧ�õģ��Ҷ���������ֻ����Ⱥ������Ⱥ�������ݽ��д�����  �������������������涤���ϣ�������Ͻǵ�ͷ��󣬵�������˹����">
+  <meta name="description" content="由于工作需求，考虑使用钉钉机器人代替邮件的功能发送任务信息，所以自己也是摸索了一番。首先钉钉机器人自然是需要依托于钉钉应用的，且钉钉机器人只能在群组里以群主的身份进行创建。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jenkins���ɶ���������ʵ���ڶ����Ϸ���������Ϣ">
+<meta property="og:title" content="Jenkins集成钉钉机器人实现在钉钉上发送任务信息">
 <meta property="og:url" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
-<meta property="og:description" content="���ڹ������󣬿���ʹ�ö��������˴����ʼ��Ĺ��ܷ���������Ϣ�������Լ�Ҳ��������һ���� ���ȶ�����������Ȼ����Ҫ�����ڶ���Ӧ�õģ��Ҷ���������ֻ����Ⱥ������Ⱥ�������ݽ��д�����  �������������������涤���ϣ�������Ͻǵ�ͷ��󣬵�������˹����">
+<meta property="og:description" content="由于工作需求，考虑使用钉钉机器人代替邮件的功能发送任务信息，所以自己也是摸索了一番。首先钉钉机器人自然是需要依托于钉钉应用的，且钉钉机器人只能在群组里以群主的身份进行创建。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/create1.png">
+<meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/create2.png">
+<meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/create3.png">
 <meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/create4.png">
+<meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/config1.png">
+<meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/config2.png">
+<meta property="og:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/config3.png">
 <meta property="article:published_time" content="2021-01-28T07:20:25.000Z">
-<meta property="article:modified_time" content="2021-01-28T07:38:10.348Z">
+<meta property="article:modified_time" content="2021-02-08T09:40:45.959Z">
 <meta property="article:author" content="Joe">
 <meta property="article:tag" content="Jenkins">
 <meta property="article:tag" content="DingTalk">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/create4.png">
+<meta name="twitter:image" content="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/create1.png">
   
     <link rel="alternative" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
   
@@ -165,7 +171,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Jenkins���ɶ���������ʵ���ڶ����Ϸ���������Ϣ
+      Jenkins集成钉钉机器人实现在钉钉上发送任务信息
     </h1>
   
 
@@ -178,11 +184,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>���ڹ������󣬿���ʹ�ö��������˴����ʼ��Ĺ��ܷ���������Ϣ�������Լ�Ҳ��������һ����</p>
-<p>���ȶ�����������Ȼ����Ҫ�����ڶ���Ӧ�õģ��Ҷ���������ֻ����Ⱥ������Ⱥ�������ݽ��д�����</p>
+        <p>由于工作需求，考虑使用钉钉机器人代替邮件的功能发送任务信息，所以自己也是摸索了一番。首先钉钉机器人自然是需要依托于钉钉应用的，且钉钉机器人只能在群组里以群主的身份进行创建。</p>
+<a id="more"></a>
 <ol>
-<li>��������������<br>�����涤���ϣ�������Ͻǵ�ͷ��󣬵�������˹�����ѡ�������Զ��������(ͨ��Webhook�����Զ������)����������Ҫ���û��������֣���ѡ�����ӵ���Ⱥ�顣�����˻��Զ�����Webhook��ַ��������Ǻ�������Jenkins��ʹ�á���ȫ���ù���Ŀǰ֧�����ַ�ʽ���ֱ����Զ���ؼ��ʡ���ǩ��IP��ַ(��)���ֱ��������Զ���ؼ��ʡ�������Կ������IP��ַ������Jenkins�Ͻ���ӳ��Ĺ�ϵ���а�ȫ�ı��ϡ�<br>������ɺ���Ⱥ����Ϳ��Կ����ɰ��Ķ��������˵���Ϣ����<br><img src="/2021/01/28/Jenkins-DingTalkPlugin/create4.png"></li>
+<li>创建钉钉机器人<br>
+在桌面钉钉上，点击左上角的头像后，点击机器人管理，选择添加自定义机器人(通过Webhook接入自定义服务)。</li>
 </ol>
+<p><img src="/2021/01/28/Jenkins-DingTalkPlugin/create1.png" alt>    <img src="/2021/01/28/Jenkins-DingTalkPlugin/create2.png" alt></p>
+<p>接下来需要设置机器人名字，并选择添加到的群组。机器人会自动生成Webhook地址，这个我们后续会在Jenkins上使用。安全设置过程目前支持三种方式，分别是自定义关键词、加签、IP地址(段)。分别是填入自定义关键词、生成密钥、填入IP地址，并在Jenkins上进行映射的关系进行安全的保障。</p>
+<p><img src="/2021/01/28/Jenkins-DingTalkPlugin/create3.png" alt></p>
+<p>创建完成后，在群里里就可以看到可爱的钉钉机器人的消息啦。</p>
+<p><img src="/2021/01/28/Jenkins-DingTalkPlugin/create4.png" alt><br>
+2. Jenkins配置</p>
+<ul>
+<li>钉钉插件安装</li>
+</ul>
+<blockquote>
+<p>想要在Jenkins上使用钉钉机器人的功能，首先必须要安装钉钉插件。需要依次在Jenkins的首页点击<strong>Manage Jenkins—&gt;Manage Plugins—&gt;Available</strong>，搜索<em>DingTalk</em>，并进行安装，目前我是用的版本是2.4.3，我们也可以看到插件的<a target="_blank" rel="noopener" href="https://jenkinsci.github.io/dingtalk-plugin/">中文文档</a>。</p>
+</blockquote>
+<p><img src="/2021/01/28/Jenkins-DingTalkPlugin/config1.png" alt></p>
+<ul>
+<li>安装完成后，我们可以回到首页点击<strong>Manage Jenkins—&gt;Configure System</strong>下找到钉钉，填写机器人的名称，Webhook，关键字/加密的信息(上述部分信息可在生成机器人处查看)，并点击测试。显示测试成功的话,并在钉钉群组内可以看到反馈信息，就说明Jenkins和钉钉机器人间的桥梁就搭建成功啦！</li>
+</ul>
+<p><img src="/2021/01/28/Jenkins-DingTalkPlugin/config2.png" alt>     <img src="/2021/01/28/Jenkins-DingTalkPlugin/config3.png" alt></p>
+<ul>
+<li>具体的针对钉钉机器人反馈的信息也可以进行自定义的设置。其中对于Freestyle Project和Pipeline都有不同的设置方法。具体也可见<a target="_blank" rel="noopener" href="https://jenkinsci.github.io/dingtalk-plugin/guide/getting-started.html">钉钉机器人插件中文文档</a>。</li>
+</ul>
 
       
 
@@ -269,6 +296,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/02/07/docker-compose/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          docker-compose.yml的基础使用
+        
+      </div>
+    </a>
   
   
     <a href="/2021/01/11/jenkins-multiple-SCMs/" id="article-nav-older" class="article-nav-link-wrap">
@@ -460,6 +496,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DingTalk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">docker-compose.yml</a>
               </li>
             
             <div class="clearfix"></div>

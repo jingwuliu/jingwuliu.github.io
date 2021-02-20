@@ -152,6 +152,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-docker-compose" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/07/docker-compose/">docker-compose.yml的基础使用</a>
+    </h1>
+  
+
+        
+        <a href="/2021/02/07/docker-compose/" class="archive-article-date">
+  	<time datetime="2021-02-07T09:20:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>docker-compose.yml文件用来做项目编排，负责实现对Docker容器集群的快速编排，部署分布式应用，通过一个单独的yaml文件为一个项目来定义一组相关联的应用容器。文件中主要包含了使用各种镜像创建的容器服务，使用的镜像可以是网络上的，也可以是根据Dockerfile文件生成的。</p>
+<p>一份标准docker-compose.yml配置文件应包含<strong>version</strong>、<strong>service</strong>、<strong>networks</strong>三部分，其中最关键的就是<em>service</em>和<em>networks</em>两部分。</p>
+        
+          <a class="article-more-a" href="/2021/02/07/docker-compose/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">docker-compose.yml</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/07/docker-compose/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Jenkins-DingTalkPlugin" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -159,7 +240,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/01/28/Jenkins-DingTalkPlugin/">Jenkins���ɶ���������ʵ���ڶ����Ϸ���������Ϣ</a>
+      <a class="article-title" href="/2021/01/28/Jenkins-DingTalkPlugin/">Jenkins集成钉钉机器人实现在钉钉上发送任务信息</a>
     </h1>
   
 
@@ -172,12 +253,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>���ڹ������󣬿���ʹ�ö��������˴����ʼ��Ĺ��ܷ���������Ϣ�������Լ�Ҳ��������һ����</p>
-<p>���ȶ�����������Ȼ����Ҫ�����ڶ���Ӧ�õģ��Ҷ���������ֻ����Ⱥ������Ⱥ�������ݽ��д�����</p>
-<ol>
-<li>��������������<br>�����涤���ϣ�������Ͻǵ�ͷ��󣬵�������˹�����ѡ�������Զ��������(ͨ��Webhook�����Զ������)����������Ҫ���û��������֣���ѡ�����ӵ���Ⱥ�顣�����˻��Զ�����Webhook��ַ��������Ǻ�������Jenkins��ʹ�á���ȫ���ù���Ŀǰ֧�����ַ�ʽ���ֱ����Զ���ؼ��ʡ���ǩ��IP��ַ(��)���ֱ��������Զ���ؼ��ʡ�������Կ������IP��ַ������Jenkins�Ͻ���ӳ��Ĺ�ϵ���а�ȫ�ı��ϡ�<br>������ɺ���Ⱥ����Ϳ��Կ����ɰ��Ķ��������˵���Ϣ����<br><img src="/2021/01/28/Jenkins-DingTalkPlugin/create4.png"></li>
-</ol>
-
+        <p>由于工作需求，考虑使用钉钉机器人代替邮件的功能发送任务信息，所以自己也是摸索了一番。首先钉钉机器人自然是需要依托于钉钉应用的，且钉钉机器人只能在群组里以群主的身份进行创建。</p>
+        
+          <a class="article-more-a" href="/2021/01/28/Jenkins-DingTalkPlugin/#more">more >></a>
+        
       
 
       
@@ -254,7 +333,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：<a target="_blank" rel="noopener" href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs Plugin</a>，该插件能实现以下目标：</p>
+        <h2 id="背景">背景</h2>
+<p>由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：<a target="_blank" rel="noopener" href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs Plugin</a>，该插件能实现以下目标：</p>
         
           <a class="article-more-a" href="/2021/01/11/jenkins-multiple-SCMs/#more">more >></a>
         
@@ -414,7 +494,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。<br>接下来会分享一些我在工作过程中遇到的问题及解决方案</p>
+        <p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。<br>
+接下来会分享一些我在工作过程中遇到的问题及解决方案</p>
         
           <a class="article-more-a" href="/2021/01/08/jenkins_problem/#more">more >></a>
         
@@ -599,10 +680,10 @@
         <p>本文会总结一些docker的基础用法。</p>
 <h2 id="Docker-基础调用">Docker 基础调用</h2>
 <ol>
-<li><strong>docker search</strong>(根据关键词搜索镜像文件)</li>
+<li><strong>docker search</strong> (根据关键词搜索镜像文件)</li>
 </ol>
 <blockquote>
-<p>docker search ubuntu　　　　　　　　#查看包含“ubuntu”的image的名称</p>
+<p>docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称</p>
 </blockquote>
         
           <a class="article-more-a" href="/2020/12/30/docker-method/#more">more >></a>
@@ -894,6 +975,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DingTalk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">docker-compose.yml</a>
               </li>
             
             <div class="clearfix"></div>

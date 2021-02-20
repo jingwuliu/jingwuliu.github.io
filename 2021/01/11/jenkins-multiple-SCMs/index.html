@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用 | Joe Liu的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：Multiple SCMs Plugin，该插件能实现以下目标：">
+  <meta name="description" content="背景 由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：Multiple SCMs Plugin，该插件能实现以下目标：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用">
 <meta property="og:url" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
-<meta property="og:description" content="背景由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：Multiple SCMs Plugin，该插件能实现以下目标：">
+<meta property="og:description" content="背景 由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：Multiple SCMs Plugin，该插件能实现以下目标：">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/source_code_management.png">
 <meta property="og:image" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/build_triggers.png">
@@ -180,16 +180,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：<a target="_blank" rel="noopener" href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs Plugin</a>，该插件能实现以下目标：</p>
+        <h2 id="背景">背景</h2>
+<p>由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：<a target="_blank" rel="noopener" href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs Plugin</a>，该插件能实现以下目标：</p>
 <a id="more"></a>
-
 <ul>
-<li><p>同时监测多个版本库，其中有一个或多个版本库有新的提交，就能自动触发新的构建。</p>
+<li>
+<p>同时监测多个版本库，其中有一个或多个版本库有新的提交，就能自动触发新的构建。</p>
 </li>
-<li><p>同时监测的多个版本库可以来自不同的代码管理器，实现混搭，如Github，Bitbucket，Mercurial等。</p>
+<li>
+<p>同时监测的多个版本库可以来自不同的代码管理器，实现混搭，如Github，Bitbucket，Mercurial等。</p>
 </li>
 </ul>
-<h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p>插件可以在Manage Jenkins–Manage Plugins里搜索到并进行下载安装。进入Jenkins Job后选择Multiple SCMs，会出现Add SCMs，我们在下拉框中可以选择想要添加的版本库类型。<br><img src="/2021/01/11/jenkins-multiple-SCMs/source_code_management.png" alt="Source_Code_Management"></p>
+<h2 id="插件使用">插件使用</h2>
+<p>插件可以在Manage Jenkins–Manage Plugins里搜索到并进行下载安装。进入Jenkins Job后选择Multiple SCMs，会出现Add SCMs，我们在下拉框中可以选择想要添加的版本库类型。<br>
+<img src="/2021/01/11/jenkins-multiple-SCMs/source_code_management.png" alt="Source_Code_Management"></p>
 <p>在<strong>Build Triggers</strong>中选择上“Build when a change is pushed to BitBucket”和“Build with BitBucket Push and Pull Request Plugin”，并在对应的位置填入需要监测的版本库位置和分支。在Triggers中同样可以加入多个版本库地址进行行为监控。</p>
 <p><img src="/2021/01/11/jenkins-multiple-SCMs/build_triggers.png" alt="Build_Triggers"></p>
 <p>最后在<strong>Build</strong>中选择Execute Shell加入需要执行的命令行内容，这样完整的监控多个版本库并实时CI的过程就基本完成了。</p>
@@ -285,7 +289,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Jenkins���ɶ���������ʵ���ڶ����Ϸ���������Ϣ
+          Jenkins集成钉钉机器人实现在钉钉上发送任务信息
         
       </div>
     </a>
@@ -480,6 +484,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DingTalk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">docker-compose.yml</a>
               </li>
             
             <div class="clearfix"></div>

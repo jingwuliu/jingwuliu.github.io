@@ -181,14 +181,14 @@
       
         <p>接上一篇的内容，我们今天将介绍Jenkins下Join插件的作用。</p>
 <a id="more"></a>
-
-
 <p>Join插件允许在直接下游作业完成后运行作业。这样，执行可以实现并行分支或执行其他步骤，然后在完成所有并行工作后最终聚合。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>我们的构建由四个作业组成–Test，TestDown1，TestDown2，TestJoin。这些作业都将按照既定的顺序执行。</p>
+<h3 id="例子">例子</h3>
+<p>我们的构建由四个作业组成–Test，TestDown1，TestDown2，TestJoin。这些作业都将按照既定的顺序执行。</p>
 <p>我们需要去定义作业之间的顺序关系，在<strong>Post-build Actions</strong>里设置“Build other projects”和“Join Trigger”以设定你的任务的下一级job以及在下一级Job完成后接着要运行的job，内容如图所示。</p>
-<h3 id="基本作业的配置"><a href="#基本作业的配置" class="headerlink" title="基本作业的配置"></a>基本作业的配置</h3><p><img src="/2021/01/08/jenkins-join/jenkins_post_build_actions.png"></p>
+<h3 id="基本作业的配置">基本作业的配置</h3>
+<p><img src="/2021/01/08/jenkins-join/jenkins_post_build_actions.png" alt></p>
 <p>在这个过程中，testDown和testDown2会在初始job完成后并行，并在上述下游任务完成后运行testJoin。我们也可以选择下游Job的执行权限是依据上游任务的成功与否去决定。</p>
-<p><img src="/2021/01/08/jenkins-join/build_other_projects.png"></p>
+<p><img src="/2021/01/08/jenkins-join/build_other_projects.png" alt></p>
 
       
 
@@ -475,6 +475,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DingTalk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">docker-compose.yml</a>
               </li>
             
             <div class="clearfix"></div>
