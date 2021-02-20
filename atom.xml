@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Joe Liu的博客</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-02-20T06:59:36.594Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Joe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker-compose.yml的基础使用</title>
+    <link href="http://example.com/2021/02/07/docker-compose/"/>
+    <id>http://example.com/2021/02/07/docker-compose/</id>
+    <published>2021-02-07T09:20:58.000Z</published>
+    <updated>2021-02-20T06:59:36.594Z</updated>
+    
+    <content type="html"><![CDATA[<p>docker-compose.yml文件用来做项目编排，负责实现对Docker容器集群的快速编排，部署分布式应用，通过一个单独的yaml文件为一个项目来定义一组相关联的应用容器。文件中主要包含了使用各种镜像创建的容器服务，使用的镜像可以是网络上的，也可以是根据Dockerfile文件生成的。</p><p>一份标准docker-compose.yml配置文件应包含<strong>version</strong>、<strong>service</strong>、<strong>networks</strong>三部分，其中最关键的就是<em>service</em>和<em>networks</em>两部分。</p><ul><li>services标签下的第二级标签的名字由用户自定义，其就为服务名称。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></li></ul><p>services下的服务里仍然有需要方法可以执行，下面我们将选择部分进行介绍。</p><h2 id="image"><a href="#image" class="headerlink" title="image"></a>image</h2><pre><code>image可以直接指定服务的镜像名称或ID。如果镜像在本地不存在，compose将会尝试拉取这个镜像。格式如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services: </span><br><span class="line">    vue-client: </span><br><span class="line">        image: hello-world </span><br><span class="line">        &#x2F;&#x2F;&#x2F;image: ubuntu:16.04 </span><br><span class="line">        &#x2F;&#x2F;&#x2F;image: a4bc65fd   </span><br></pre></td></tr></table></figure></code></pre><h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><pre><code>服务也可以使用build基于一份Dockerfile，在使用docker-compose up启动时执行构建任务。Compose会利用提供的路径自动构建该镜像，然后使用这个镜像启动服务容器。如果你同时指定了image和build两个标签，那么Compose会构建镜像并且把镜像命名为image提供的名称。</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services: </span><br><span class="line">    vue-client:</span><br><span class="line">        build: .&#x2F;build&#x2F;client</span><br></pre></td></tr></table></figure><h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><pre><code>使用command可以覆盖容器启动后默认执行的命令。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        command: [&quot;--replSet&quot;, &quot;rs0&quot;, &quot;--bind_ip_all&quot;]</span><br><span class="line">        &#x2F;&#x2F;&#x2F;command: --replSet rs0 --bind_ip_all</span><br></pre></td></tr></table></figure></code></pre><h2 id="container-name"><a href="#container-name" class="headerlink" title="container_name"></a>container_name</h2><pre><code>该指令用于指定生成的容器的标签名。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        container_name: vue-client</span><br></pre></td></tr></table></figure></code></pre><h2 id="env-file"><a href="#env-file" class="headerlink" title="env_file"></a>env_file</h2><pre><code>在docker-compose.yml中可以定义一个专门存放变量的文件。也可以通过docker-compose -f FILE的方式指定docker-compose.yml配置文件，相应的配置文件中的env_file也会使用配置文件路径。- docker-compose.yml<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    vue-client:</span><br><span class="line">        env_file: .env</span><br></pre></td></tr></table></figure>- .env<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MONGODB_DB_NAME&#x3D;release-test</span><br><span class="line">MEDA_DATA_PATH&#x3D;&#x2F;meda_data&#x2F;release_test&#x2F;images&#x2F;</span><br><span class="line">CLIENT_PORT&#x3D;3001:80</span><br></pre></td></tr></table></figure></code></pre><h2 id="environment"><a href="#environment" class="headerlink" title="environment"></a>environment</h2><pre><code>添加环境变量，可以使用数组或字典。作用就是为镜像设置变量，将变量保存到镜像中，由此镜像生成的容器同样也会包含这些变量设置。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    node-server:</span><br><span class="line">        environment:</span><br><span class="line">            MONGODB_URL: &quot;mongodb:&#x2F;&#x2F;mongo1:27017&quot;</span><br><span class="line">            MONGODB_DB_NAME: &quot;release-test-1&quot;</span><br></pre></td></tr></table></figure></code></pre><h2 id="healthcheck"><a href="#healthcheck" class="headerlink" title="healthcheck"></a>healthcheck</h2><pre><code>用于检查测试服务使用的容器是否正常。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    mongo:</span><br><span class="line">       healthcheck:</span><br><span class="line">            test: [&quot;CMD&quot;,&quot;curl&quot;,&quot;-f&quot;,&quot;http:&#x2F;&#x2F;localhost&quot;]</span><br><span class="line">            interval: 15s</span><br><span class="line">            timeout: 10s</span><br><span class="line">            retries: 3</span><br><span class="line">            start_period: 10s</span><br></pre></td></tr></table></figure>其中interval、timeout、start_period都定位持续时间。test中的内容必须是字符串或列表。</code></pre><h2 id="ports"><a href="#ports" class="headerlink" title="ports"></a>ports</h2><pre><code>映射端口。可以使用HOST:CONTAINER的方式指定端口，可以指定容器和主机端口。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    file-server:</span><br><span class="line">        ports:</span><br><span class="line">            - &quot;9950:80&quot;</span><br><span class="line">            - &quot;8090:8090&quot;</span><br></pre></td></tr></table></figure></code></pre><h2 id="volumes"><a href="#volumes" class="headerlink" title="volumes"></a>volumes</h2><pre><code>挂载一个目录或已存在的数据卷容器，直接使用HOST:CONTAINER的格式。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- services:</span><br><span class="line">    engine-center:</span><br><span class="line">        volumes:</span><br><span class="line">            - &quot;&#x2F;meda_data&#x2F;release_test&#x2F;images:&#x2F;app&#x2F;meda_output&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">    mongo:</span><br><span class="line">        volumes:</span><br><span class="line">            - &quot;dbdata1:&#x2F;data&#x2F;db&quot;</span><br><span class="line"></span><br><span class="line">- volumes:</span><br><span class="line">    dbdata1:</span><br></pre></td></tr></table></figure></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;docker-compose.yml文件用来做项目编排，负责实现对Docker容器集群的快速编排，部署分布式应用，通过一个单独的yaml文件为一个项目来定义一组相关联的应用容器。文件中主要包含了使用各种镜像创建的容器服务，使用的镜像可以是网络上的，也可以是根据Dockerf</summary>
+      
+    
+    
+    
+    
+    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
+    
+    <category term="Docker-compose" scheme="http://example.com/tags/Docker-compose/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins集成钉钉机器人实现在钉钉上发送任务信息</title>
+    <link href="http://example.com/2021/01/28/Jenkins-DingTalkPlugin/"/>
+    <id>http://example.com/2021/01/28/Jenkins-DingTalkPlugin/</id>
+    <published>2021-01-28T07:20:25.000Z</published>
+    <updated>2021-02-20T06:33:52.513Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于工作需求，考虑使用钉钉机器人代替邮件的功能发送任务信息，所以自己也是摸索了一番。首先钉钉机器人自然是需要依托于钉钉应用的，且钉钉机器人只能在群组里以群主的身份进行创建。</p><h2 id="创建钉钉机器人"><a href="#创建钉钉机器人" class="headerlink" title="创建钉钉机器人"></a>创建钉钉机器人</h2><p>在桌面钉钉上，点击左上角的头像后，点击机器人管理，选择添加自定义机器人(通过Webhook接入自定义服务)。</p><p><img src="/2021/01/28/Jenkins-DingTalkPlugin/create1.png"> &emsp; &emsp;<img src="/2021/01/28/Jenkins-DingTalkPlugin/create2.png"></p><p>接下来需要设置机器人名字，并选择添加到的群组。机器人会自动生成Webhook地址，这个我们后续会在Jenkins上使用。安全设置过程目前支持三种方式，分别是自定义关键词、加签、IP地址(段)。分别是填入自定义关键词、生成密钥、填入IP地址，并在Jenkins上进行映射的关系进行安全的保障。</p><p><img src="/2021/01/28/Jenkins-DingTalkPlugin/create3.png"></p><p>创建完成后，在群里里就可以看到可爱的钉钉机器人的消息啦。</p><p><img src="/2021/01/28/Jenkins-DingTalkPlugin/create4.png"></p><h2 id="Jenkins配置"><a href="#Jenkins配置" class="headerlink" title="Jenkins配置"></a>Jenkins配置</h2><ul><li>钉钉插件安装。想要在Jenkins上使用钉钉机器人的功能，首先必须要安装钉钉插件。需要依次在Jenkins的首页点击<strong>Manage Jenkins—&gt;Manage Plugins—&gt;Available</strong>，搜索<em>DingTalk</em>，并进行安装，目前我是用的版本是2.4.3，我们也可以看到插件的<a href="https://jenkinsci.github.io/dingtalk-plugin/">中文文档</a>。</li></ul><p><img src="/2021/01/28/Jenkins-DingTalkPlugin/config1.png"></p><ul><li>安装完成后，我们可以回到首页点击<strong>Manage Jenkins—&gt;Configure System</strong>下找到钉钉，填写机器人的名称，Webhook，关键字/加密的信息(上述部分信息可在生成机器人处查看)，并点击测试。显示测试成功的话,并在钉钉群组内可以看到反馈信息，就说明Jenkins和钉钉机器人间的桥梁就搭建成功啦！</li></ul><p><img src="/2021/01/28/Jenkins-DingTalkPlugin/config2.png">  &emsp;  <img src="/2021/01/28/Jenkins-DingTalkPlugin/config3.png"></p><ul><li>具体的针对钉钉机器人反馈的信息也可以进行自定义的设置。其中对于Freestyle Project和Pipeline都有不同的设置方法。具体也可见<a href="https://jenkinsci.github.io/dingtalk-plugin/guide/getting-started.html">钉钉机器人插件中文文档</a>。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;由于工作需求，考虑使用钉钉机器人代替邮件的功能发送任务信息，所以自己也是摸索了一番。首先钉钉机器人自然是需要依托于钉钉应用的，且钉钉机器人只能在群组里以群主的身份进行创建。&lt;/p&gt;
+&lt;h2 id=&quot;创建钉钉机器人&quot;&gt;&lt;a href=&quot;#创建钉钉机器人&quot; class=&quot;hea</summary>
+      
+    
+    
+    
+    
+    <category term="Jenkins" scheme="http://example.com/tags/Jenkins/"/>
+    
+    <category term="DingTalk" scheme="http://example.com/tags/DingTalk/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用</title>
+    <link href="http://example.com/2021/01/11/jenkins-multiple-SCMs/"/>
+    <id>http://example.com/2021/01/11/jenkins-multiple-SCMs/</id>
+    <published>2021-01-11T01:45:34.000Z</published>
+    <updated>2021-02-20T06:29:33.577Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：<a href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs Plugin</a>，该插件能实现以下目标：</p><ul><li><p>同时监测多个版本库，其中有一个或多个版本库有新的提交，就能自动触发新的构建。</p></li><li><p>同时监测的多个版本库可以来自不同的代码管理器，实现混搭，如Github，Bitbucket，Mercurial等。</p></li></ul><h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p>插件可以在Manage Jenkins–Manage Plugins里搜索到并进行下载安装。进入Jenkins Job后选择Multiple SCMs，会出现Add SCMs，我们在下拉框中可以选择想要添加的版本库类型。<br><img src="/2021/01/11/jenkins-multiple-SCMs/source_code_management.png" alt="Source_Code_Management"></p><p>在<strong>Build Triggers</strong>中选择上“Build when a change is pushed to BitBucket”和“Build with BitBucket Push and Pull Request Plugin”，并在对应的位置填入需要监测的版本库位置和分支。在Triggers中同样可以加入多个版本库地址进行行为监控。</p><p><img src="/2021/01/11/jenkins-multiple-SCMs/build_triggers.png" alt="Build_Triggers"></p><p>最后在<strong>Build</strong>中选择Execute Shell加入需要执行的命令行内容，这样完整的监控多个版本库并实时CI的过程就基本完成了。</p><p><img src="/2021/01/11/jenkins-multiple-SCMs/build.png" alt="Build"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：&lt;a href=&quot;htt</summary>
+      
+    
+    
+    
+    
+    <category term="Jenkins" scheme="http://example.com/tags/Jenkins/"/>
+    
+    <category term="Multiple SCMs" scheme="http://example.com/tags/Multiple-SCMs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins下Join插件介绍</title>
+    <link href="http://example.com/2021/01/08/jenkins-join/"/>
+    <id>http://example.com/2021/01/08/jenkins-join/</id>
+    <published>2021-01-08T09:06:48.000Z</published>
+    <updated>2021-02-20T06:30:55.303Z</updated>
+    
+    <content type="html"><![CDATA[<p>接上一篇的内容，我们今天将介绍Jenkins下Join插件的作用。</p><p>Join插件允许在直接下游作业完成后运行作业。这样，执行可以实现并行分支或执行其他步骤，然后在完成所有并行工作后最终聚合。</p><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>我们的构建由四个作业组成–Test，TestDown1，TestDown2，TestJoin。这些作业都将按照既定的顺序执行。</p><p>我们需要去定义作业之间的顺序关系，在<strong>Post-build Actions</strong>里设置“Build other projects”和“Join Trigger”以设定你的任务的下一级job以及在下一级Job完成后接着要运行的job，内容如图所示。</p><h2 id="基本作业的配置"><a href="#基本作业的配置" class="headerlink" title="基本作业的配置"></a>基本作业的配置</h2><p><img src="/2021/01/08/jenkins-join/jenkins_post_build_actions.png"></p><p>在这个过程中，testDown和testDown2会在初始job完成后并行，并在上述下游任务完成后运行testJoin。我们也可以选择下游Job的执行权限是依据上游任务的成功与否去决定。</p><p><img src="/2021/01/08/jenkins-join/build_other_projects.png"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;接上一篇的内容，我们今天将介绍Jenkins下Join插件的作用。&lt;/p&gt;
+&lt;p&gt;Join插件允许在直接下游作业完成后运行作业。这样，执行可以实现并行分支或执行其他步骤，然后在完成所有并行工作后最终聚合。&lt;/p&gt;
+&lt;h2 id=&quot;例子&quot;&gt;&lt;a href=&quot;#例子&quot; clas</summary>
+      
+    
+    
+    
+    
+    <category term="Jenkins" scheme="http://example.com/tags/Jenkins/"/>
+    
+    <category term="Join" scheme="http://example.com/tags/Join/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins+Docker+Selenium使用过程中碰到的一些问题</title>
+    <link href="http://example.com/2021/01/08/jenkins_problem/"/>
+    <id>http://example.com/2021/01/08/jenkins_problem/</id>
+    <published>2021-01-08T08:43:50.000Z</published>
+    <updated>2021-02-20T06:37:00.261Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。接下来会分享一些我在工作过程中遇到的问题及解决方案。</p><h2 id="Jenkins构建找不到python相关依赖"><a href="#Jenkins构建找不到python相关依赖" class="headerlink" title="Jenkins构建找不到python相关依赖"></a>Jenkins构建找不到python相关依赖</h2><p>我自己用的是python进行test case编写，但是在jenkins上进行测试时，发现总是提示找不到相应的import，后来发现我们在测试机上装的python相关依赖是在用户下的，而jenkins所在另外一个组，无法调用相关python依赖包，所以出现了相关错误。</p><h2 id="Jenkins无法monitor仓库内submodule下的行为"><a href="#Jenkins无法monitor仓库内submodule下的行为" class="headerlink" title="Jenkins无法monitor仓库内submodule下的行为"></a>Jenkins无法monitor仓库内submodule下的行为</h2><p>工作任务需要监视一个repository及其submodule下的行为并基于git行为触发相应动作。由于是初次使用Jenkins，所以在build Job时选择的是freestyle project，并在Source Code Management下选择的Git，并填入了相应的Repository URL和Credentials，由于任务中存在Submodule，所以也在Add中选择了<strong>Recursively update submodules</strong>和<strong>Use cendentials from default remote of parent repository</strong>，其中前者递归更新子模块会帮助递归检索所有子模块；后者保证子模块可以使用来自父仓库的默认远程凭据。</p><p><img src="/2021/01/08/jenkins_problem/advanced_submodules_behaviours.png" alt="Advanced sub-modules behaviours"><br>为了实现监视仓库行为并自动触发job任务的过程，我们在Build Triggers下选择了<strong>Build with Bitbucket Push and Pull Request Plugin</strong>插件，该插件使得我们的主仓库在有Git行为时Job可以实时的build任务。</p><p><img src="/2021/01/08/jenkins_problem/Build_with_Bitbucket_Push_Pull_Request_Plugin.png" alt="Build with Bitbucket Push and Pull Request Plugin"></p><p>并在Bitbucket上的repository下配置了Webhooks，webhook简单来说就是callback，针对Bitbucket上的行为会触发request并将request传递给相应地址。</p><p><img src="/2021/01/08/jenkins_problem/webhooks.png" alt="Webhooks"></p><p>如图所示，我们可以自由选择Webhooks需要监控的Events</p><p><img src="/2021/01/08/jenkins_problem/webhooks_generation.png"></p><p>但是在实际应用中发现当Submodule上有新的行为时Job无法检测到，所以这里我们考虑建立多个Job，每个Job都会连接相应的Repository且唯一任务就是监控Repository的行为，并在监测到后利用<strong>Post-build Actions</strong>将任务传递到主Job上再run任务。</p><p><img src="/2021/01/08/jenkins_problem/post_build_actions.png"></p><p>对于<strong>Join Plugin</strong>，我们将在后面的小节进行介绍。由于我们共有两个submodule，所以最终的流程类似于下面的图形。<br>这样我们的整个过程就实现啦。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;由于工作上的需求，需要使用Jenkins去检测每一次的git commit行为，检测到后触发测试代码，重启docker服务并使用Selenium对界面数据进行自动化获取并比对。接下来会分享一些我在工作过程中遇到的问题及解决方案。&lt;/p&gt;
+&lt;h2 id=&quot;Jenkins构建找</summary>
+      
+    
+    
+    
+    
+    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
+    
+    <category term="Dockerfile" scheme="http://example.com/tags/Dockerfile/"/>
+    
+    <category term="Docker-compose" scheme="http://example.com/tags/Docker-compose/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker镜像、容器和仓库</title>
+    <link href="http://example.com/2020/12/30/image-container-relationship/"/>
+    <id>http://example.com/2020/12/30/image-container-relationship/</id>
+    <published>2020-12-30T13:28:33.000Z</published>
+    <updated>2021-02-20T06:23:19.811Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文将讲解在docker中镜像和容器概念以及两者间的关系。</p><h2 id="docker镜像"><a href="#docker镜像" class="headerlink" title="docker镜像"></a>docker镜像</h2><p>docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。</p><p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_image1.png"></div></span></p><p>根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。<br>每一层都包括了一直指向父层的指针。如果一个层没有这个指针，说明它处于最底层。<br><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_image2.png"></div></span></p><p>镜像是一堆只读层的统一视角，这些只读层重叠在一起，除了最下面一层，其他层都会有一个指针指向下一层。统一文件系统(Union File System)技术能够将不同的层整合成一个文件系统。在用户角度看，只存在一个文件系统。镜像每一层都是只读层。</p><p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_image3.png"></div></span></p><h2 id="docker容器"><a href="#docker容器" class="headerlink" title="docker容器"></a>docker容器</h2><p>docker容器是由docker镜像创建的运行实例，容器也是一堆层的统一视角，不过容器最上面那一层是可读写的。即<br>容器 = 镜像 + 可读写层</p><p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_container1.png"></div></span></p><p>一个容器中的进程可以对文件进行创建、修改、删除，这些改变都作用于可读写层。</p><p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_container2.png"></div></span></p><p>docker容器类似虚拟机，只不过相对于虚拟机，docker守护进程可以直接与主操作系统进行通信，为各个docker容器分配资源，并保证每个容器都可以相互隔离独立，由于docker容器无需臃肿的从操作系统，docker可以节省大量的磁盘空间和其他系统资源。<br>3. docker仓库<br>docker仓库就是用来存放镜像的位置，docker运作中使用的默认仓库是<a href="https://registry.hub.docker.com/">docker hub公共仓库</a>，当用户创建了自己的镜像之后可以用push命令将它上传到共有或私有的仓库。这样下一次再需要使用该镜像时直接使用pull从仓库拉下来就可以了。</p><p>本文部分内容借鉴于：浪仙(<a href="https://www.cnblogs.com/LangXian/">https://www.cnblogs.com/LangXian/</a>)</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本文将讲解在docker中镜像和容器概念以及两者间的关系。&lt;/p&gt;
+&lt;h2 id=&quot;docker镜像&quot;&gt;&lt;a href=&quot;#docker镜像&quot; class=&quot;headerlink&quot; title=&quot;docker镜像&quot;&gt;&lt;/a&gt;docker镜像&lt;/h2&gt;&lt;p&gt;docker的镜像</summary>
+      
+    
+    
+    
+    
+    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker常用基本操作</title>
+    <link href="http://example.com/2020/12/30/docker-method/"/>
+    <id>http://example.com/2020/12/30/docker-method/</id>
+    <published>2020-12-30T08:35:07.000Z</published>
+    <updated>2021-02-20T06:57:10.448Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文会总结一些docker的基础用法。</p><h2 id="Docker-基础调用"><a href="#Docker-基础调用" class="headerlink" title="Docker 基础调用"></a>Docker 基础调用</h2><h4 id="docker-search-根据关键词搜索镜像文件"><a href="#docker-search-根据关键词搜索镜像文件" class="headerlink" title="docker search (根据关键词搜索镜像文件)"></a><strong>docker search</strong> (根据关键词搜索镜像文件)</h4><blockquote><p>docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称</p></blockquote><p><img src="/2020/12/30/docker-method/docker_search.png" alt="docker search ubuntu"> </p><h4 id="docker-pull-下载镜像到本地"><a href="#docker-pull-下载镜像到本地" class="headerlink" title="docker pull(下载镜像到本地)"></a><strong>docker pull</strong>(下载镜像到本地)</h4><blockquote><p>docker pull ubuntu　　　　　　　　#下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自由选择下载镜像的版本，如ubuntu:15.10)。</p></blockquote><p><img src="/2020/12/30/docker-method/docker_pull.png" alt="docker pull ubuntu"></p><h4 id="docker-images-查看本地jenkins所有镜像"><a href="#docker-images-查看本地jenkins所有镜像" class="headerlink" title="docker images(查看本地jenkins所有镜像)"></a><strong>docker images</strong>(查看本地jenkins所有镜像)</h4><blockquote><p>docker images　　　　　　　　#列出本地所有镜像及其信息(标签，镜像ID，创建时间，镜像大小)</p></blockquote><p><img src="/2020/12/30/docker-method/docker_images.png" alt="docker images"></p><h4 id="docker-rmi-删除镜像"><a href="#docker-rmi-删除镜像" class="headerlink" title="docker rmi(删除镜像)"></a><strong>docker rmi</strong>(删除镜像)</h4><blockquote><p>docker rmi ubuntu　　　　　　　　#删除本地ubuntu镜像</p></blockquote><p><img src="/2020/12/30/docker-method/docker_rmi.png" alt="docker rmi ubuntu"></p><h4 id="docker-run-运行并启动一个新的容器"><a href="#docker-run-运行并启动一个新的容器" class="headerlink" title="docker run(运行并启动一个新的容器)"></a><strong>docker run</strong>(运行并启动一个新的容器)</h4><blockquote><p>docker run -it ubuntu　　　　　　　　#运行并启动一个ubuntu(如检测到本地无所需镜像，将先下载后再创建启动容器)<br>部分常用参数如下</p><ul><li>-i: 以交互模式运行容器，通常与-t同时使用；</li><li>-t: 为容器重新分配一个伪输入终端，通常与-i同时使用；</li><li>-p: 指定端口映射，格式为主机端口:容器端口</li><li>-d: 后台运行容器，并返回容器ID；</li><li>-P: 随机端口映射，容器内部端口随机映射到主机端口；</li><li>–name=’docker_test’:为容器指定一个名称；</li><li>–volume,-v:绑定一个卷</li></ul></blockquote><h4 id="docker-stop-停止一个容器的运行"><a href="#docker-stop-停止一个容器的运行" class="headerlink" title="docker stop(停止一个容器的运行)"></a><strong>docker stop</strong>(停止一个容器的运行)</h4><blockquote><p>docker stop Container_ID　　　　　　　　#停止相关容器运行</p></blockquote><h4 id="docker-rm-删除一个或多个容器"><a href="#docker-rm-删除一个或多个容器" class="headerlink" title="docker rm(删除一个或多个容器)"></a><strong>docker rm</strong>(删除一个或多个容器)</h4><blockquote><p>docker rm Container_ID　　　　　　　　#删除相关容器</p></blockquote><h4 id="docker-ps-显示所有容器进程"><a href="#docker-ps-显示所有容器进程" class="headerlink" title="docker ps(显示所有容器进程)"></a><strong>docker ps</strong>(显示所有容器进程)</h4><p><img src="/2020/12/30/docker-method/docker_ps.png" alt="docker ps list"></p><h4 id="docker-logs-查看容器日志"><a href="#docker-logs-查看容器日志" class="headerlink" title="docker logs(查看容器日志)"></a><strong>docker logs</strong>(查看容器日志)</h4><pre><code>&gt;docker logs [OPTIONS] CONTAINER_ID    Options:        --details       显示更多信息     -f,--follow        跟踪实时日志        --since string  显示自某个timestamp之后的日志        --tail string   从日志末尾显示多少行日志，默认是all     -t,--timestamps    显示时间戳        --until string  显示自某个timestamp之前的日志</code></pre><hr><h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>Dockerfile是一个用来构建镜像的文本文件,文本内容包含了一条条构建镜像所需的指令和说明。如果想要使用该镜像的话，还需要使用 <em>docker run</em> 命令来运行这个镜像从而生成容器。</p><h4 id="使用Dockerfile定制镜像"><a href="#使用Dockerfile定制镜像" class="headerlink" title="使用Dockerfile定制镜像"></a>使用Dockerfile定制镜像</h4><p>FROM：定制的镜像都是基于FROM的镜像作为base镜像，后续的操作也都是基于这个base镜像<br>RUN：用于执行后面的命令行命令。</p><ul><li>注意：Dockerfile的每次指令每执行一次都会在docker上新建一层。所以在构建镜像时应尽量减少过多无意义的层。</li></ul><h4 id="开始构建镜像"><a href="#开始构建镜像" class="headerlink" title="开始构建镜像"></a>开始构建镜像</h4><p>我们构建了一个Dockerfile文件，并在文件中添加如下内容：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx</span><br><span class="line">RUN echo &#39;这是一个本地构建的nginx镜像&#39;</span><br></pre></td></tr></table></figure><p>在Dockerfile文件的存放目录下，使用build执行构建动作。通过下述语句构建了一个nginx:v3的镜像，其中最后的.代表本次执行的上下文路径(docker在构建镜像时，有时想要使用到本机的文件，docker build命令得知路径后，会将路径下的所有内容打包)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t nginx:v3 .</span><br></pre></td></tr></table></figure><p><img src="/2020/12/30/docker-method/Dockerfile_build.png" alt="Dockerfile build"><br>根据上文内容，我们可以看出已经成功构建了一个新的镜像。</p><h4 id="常用指令详解"><a href="#常用指令详解" class="headerlink" title="常用指令详解"></a>常用指令详解</h4><h5 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h5><blockquote><p>复制指令，从上下文目录中复制文件或目录到容器里指定路径。</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">COPY &lt;源路径&gt; &lt;目标路径&gt;</span><br><span class="line">COPY nginx.conf &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure><h5 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h5><blockquote><p>类似于RUN指令，用于运行程序。为启动的容器指定默认要运行的程序，程序运行结束，容器也就结束。如果Dockerfile中存在多个CMD指令，仅最后一个生效</p></blockquote><ul><li>CMD在docker run时运行</li><li>RUN是在docker build时运行<br>格式：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMD &lt;shell 命令&gt;</span><br><span class="line">CMD [&quot;&lt;可执行文件或命令&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]</span><br><span class="line">CMD [&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]　　　# 该写法是为 ENTRYPOINT 指令指定的程序提供默认参数</span><br></pre></td></tr></table></figure></li></ul><h5 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h5><blockquote><p>类似于CMD指令，但其不会被docker run的命令行参数指定的指令所覆盖<br>格式：</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [&quot;&lt;executeable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]</span><br></pre></td></tr></table></figure><p>假设已通过 Dockerfile 构建了 nginx:test 镜像：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [&quot;nginx&quot;, &quot;-c&quot;] # 定参</span><br><span class="line">CMD [&quot;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf&quot;] # 变参 </span><br></pre></td></tr></table></figure><p>1、不传参运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$docker run  nginx:test</span><br></pre></td></tr></table></figure><p>容器内会默认运行以下命令，启动主进程。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure><p>2、传参运行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run  nginx:test -c &#x2F;etc&#x2F;nginx&#x2F;new.conf</span><br></pre></td></tr></table></figure><p>容器内会默认运行以下命令，启动主进程(/etc/nginx/new.conf:假设容器内已有此文件)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c &#x2F;etc&#x2F;nginx&#x2F;new.conf</span><br></pre></td></tr></table></figure><h5 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h5><blockquote><p>设置环境变量<br>格式：</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key1&gt;&#x3D;&lt;value1&gt; &lt;key2&gt;&#x3D;&lt;value2&gt;...</span><br><span class="line">ENV PATH&#x3D;&#39;&#x2F;app&#x2F;pwp&#x2F;am-pwa&#x2F;bin:$&#123;PATH&#125;&#39;</span><br></pre></td></tr></table></figure><h5 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h5><blockquote><p>定义匿名数据卷，斌面重要的数据因容器重启而丢失<br>格式：</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VOLUME [&quot;&lt;路径1&gt;&quot;, &quot;&lt;路径2&gt;&quot;...]</span><br><span class="line">VOLUME &lt;路径&gt;</span><br></pre></td></tr></table></figure><h5 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h5><blockquote><p>声明端口，帮助镜像使用者明确镜像服务的守护端口，以方便配置映射。如果在启动容器时使用的docker run -P，EXPOSE的端口将被随机映射。<br>格式：<br><code>EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]</code></p></blockquote><hr><h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><blockquote><p>Compose是用于定义和运行多容器Docker应用程序的工具。通过Compose，可以使用YML文件来配置和整合所有容器需要的服务，然后使用一条命令控制YML文件配置即可创建并启动所有需要的服务。<br>Compose使用的步骤如下：</p><ul><li>使用Dokcerfile定义容器所需的环境</li><li>使用docker-compose.yml文件定义构成容器所需的服务，保证所有服务在隔离环境中可以一起运行</li><li>执行docker-compose up命令启动并运行整个程序</li></ul></blockquote><h3 id="YML文件配置指令参考"><a href="#YML文件配置指令参考" class="headerlink" title="YML文件配置指令参考"></a>YML文件配置指令参考</h3><h4 id="version"><a href="#version" class="headerlink" title="version"></a>version</h4><p>指定本yml依从的compose哪个版本所制定</p><h4 id="build"><a href="#build" class="headerlink" title="build"></a>build</h4><p>指定为构建镜像上下文路径：<br>例如，指定为从上下文路径./build/client/Dockerfile构建镜像：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">version: &quot;3.4&quot;</span><br><span class="line">services:</span><br><span class="line">  vue-client:</span><br><span class="line">  build: .&#x2F;build&#x2F;client</span><br></pre></td></tr></table></figure><h4 id="command"><a href="#command" class="headerlink" title="command"></a>command</h4><p>覆盖容器启动的默认命令。</p><h4 id="container-name"><a href="#container-name" class="headerlink" title="container_name"></a>container_name</h4><p>指定自定义容器名称，若无自定义名称，则系统将自动生成默认名称。</p><h4 id="environment"><a href="#environment" class="headerlink" title="environment"></a>environment</h4><p>添加环境变量。可以使用数组、字典、任何布尔值。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">environment:</span><br><span class="line">      MONGODB_URL: &quot;mongodb:&#x2F;&#x2F;mongo1:27017&quot;</span><br><span class="line">      MONGODB_DB_NAME: &quot;$&#123;MONGODB_DB_NAME&#125;&quot;</span><br><span class="line">      LM_LICENSE_FILE: &quot;$&#123;MEDA_LM_LICENSE_FILE&#125;&quot;</span><br></pre></td></tr></table></figure><h4 id="healthcheck"><a href="#healthcheck" class="headerlink" title="healthcheck"></a>healthcheck</h4><p>用于检测docker服务是否健康运行。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">healthcheck:</span><br><span class="line">  test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http:&#x2F;&#x2F;localhost&quot;] # 设置检测程序</span><br><span class="line">  interval: 1m30s # 设置检测间隔</span><br><span class="line">  timeout: 10s # 设置检测超时时间</span><br><span class="line">  retries: 3 # 设置重试次数</span><br><span class="line">  start_period: 40s # 启动后，多少秒开始启动检测程序</span><br></pre></td></tr></table></figure><h4 id="image"><a href="#image" class="headerlink" title="image"></a>image</h4><p>指定容器运行的镜像。</p><h4 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h4><ul><li>no: 默认的重启策略，任何情况下不会重启容器。</li><li>always: 容器总是重新启动。</li><li>on-failure: 在容器非正常退出时会重启容器。</li><li>unless-syopped: 在容器退出时重启容器，但不考虑在docker进程启动时就停止了的容器。</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">restart: &quot;no&quot;</span><br><span class="line">restart: always</span><br><span class="line">restart: on-failure</span><br><span class="line">restart: unless-stopped</span><br></pre></td></tr></table></figure><h4 id="volumnes"><a href="#volumnes" class="headerlink" title="volumnes"></a>volumnes</h4><p>volumns负责将主机的数据卷或文件挂载到容器里。具体来说，volumns由两种设置方式。</p><ul><li><p>绝对路径</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ghost:  </span><br><span class="line"></span><br><span class="line">  image: ghost</span><br><span class="line"></span><br><span class="line">  volumes:</span><br><span class="line"></span><br><span class="line">    - .&#x2F;ghost&#x2F;config.js:&#x2F;var&#x2F;lib&#x2F;ghost&#x2F;config.js</span><br></pre></td></tr></table></figure></li><li><p>卷标</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line"> mysql:  </span><br><span class="line">  image: mysql</span><br><span class="line">  container_name: mysql</span><br><span class="line">  volumes:</span><br><span class="line">    - mysql:&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line"></span><br><span class="line">volumes:</span><br><span class="line"> mysql:</span><br></pre></td></tr></table></figure><p>第一种方式路径直接挂载到本地，更加直观，但需要管理本地的路径。第二种方式使用卷标的方式，相对简介，但不知道数据存储在本地具体什么位置，需要使用类似 <em>docker volume ls</em> 的方式查看。</p></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;本文会总结一些docker的基础用法。&lt;/p&gt;
+&lt;h2 id=&quot;Docker-基础调用&quot;&gt;&lt;a href=&quot;#Docker-基础调用&quot; class=&quot;headerlink&quot; title=&quot;Docker 基础调用&quot;&gt;&lt;/a&gt;Docker 基础调用&lt;/h2&gt;&lt;h4 id=&quot;do</summary>
+      
+    
+    
+    
+    
+    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
+    
+    <category term="Dockerfile" scheme="http://example.com/tags/Dockerfile/"/>
+    
+    <category term="Docker-compose" scheme="http://example.com/tags/Docker-compose/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为什么需要Docker?</title>
+    <link href="http://example.com/2020/12/17/docker-value/"/>
+    <id>http://example.com/2020/12/17/docker-value/</id>
+    <published>2020-12-17T06:30:14.000Z</published>
+    <updated>2021-02-20T06:40:01.450Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是一篇介绍为什么要用Docker的文章</p><p>最近在工作中由于老板布置的任务需求，需要使用到Docker，所以想细致的了解学习一下<strong>Docker</strong>，总结了一些基础内容，分享给大家。</p><h2 id="为什么需要Docker"><a href="#为什么需要Docker" class="headerlink" title="为什么需要Docker"></a>为什么需要Docker</h2><p>Docker<strong>官方介绍</strong>(中文版)：<a href="http://www.docker-cn.com/what-docker#/developers">http://www.docker-cn…</a></p><p><img src="https://pic3.zhimg.com/80/v2-714d489867d85c7949ffebd891693c0e_720w.jpg" alt="Docker图标" title="Image"></p><blockquote><p>Docker 是世界领先的软件容器平台。<br>开发人员利用 Docker 可以消除协作编码时“在我的机器上可正常工作”的问题。<br>运维人员利用 Docker 可以在隔离容器中并行运行和管理应用，获得更好的计算密度。<br>企业利用 Docker 可以构建敏捷的软件交付管道，以更快的速度、更高的安全性和可靠的信誉为 Linux 和 Windows Server 应用发布新功能</p></blockquote><ul><li>环境(切换/配置)繁琐<br>一般我们写程序的，能接触到好几个<strong>环境</strong>：</li></ul><p>自己写代码的环境叫做开发环境。<br>给测试去跑的环境叫做测试环境。<br>测试完可以对外使用的叫做生产环境。<br>其实我们在学习编程中，很多时间都浪费在“环境”上：</p><ul><li>如果我现在重装了系统，我想要跑我的war/jar包，我得去安装一下JDK、Tomcat、MySQL等配置各种的环境变量才能跑起来。</li><li>开开心心地跟着博主给出的步骤去写Demo，但总是有Bug。(这里我将版本/依赖也归纳在环境的范畴里边)。</li><li>好不容易在测试环境下跑起来了，在生产环境就各种出错！</li><li>跟着教学视频做分布式/集群的项目，跑一堆的虚拟机，每个虚拟机都要安装对应的环境。</li></ul><p>所以就有个笑话《千万不要跟程序员说，你的代码有bug》：</p><ul><li>他的第一反应是你的环境有问题，第二就是你是傻逼不会用吧。</li><li>你要跟他这么说：“这个程序运行的怎么运行的跟预期不一样，是我操作有问题吗？”。</li><li>这货就会第一反应“我擦，这是不是出bug了？”</li></ul><ul><li>应用间需要隔离<br>比如我写了两个应用(网站)，这两个应用部署在同一台服务器上，那可能会出现什么问题？</li></ul><ul><li>如果一个应用出现了问题，导致CPU占100%。那另一个应用也会受到关联，跟着一起凉凉了。</li><li>这两个应用是完全不同技术栈的应用，比如一个PHP，一个.NET。这两个应用各种的依赖软件都安装在同一个服务器上，可能就会造成各种冲突/无法兼容，这可能调试就非常麻烦了。</li></ul><h3 id="解决环境-切换-配置"><a href="#解决环境-切换-配置" class="headerlink" title="解决环境(切换/配置)"></a>解决环境(切换/配置)</h3><p>不知道大家有没有装过系统，比如说装Linux虚拟机，重装Windows系统，都是需要镜像的。</p><p>有了这个镜像，我们就可以<strong>运行</strong>这个镜像，来进行安装系统的操作(此处省略N个下一步)，于是我们的系统就装好了。一般来说，我们去官方渠道下载的镜像，都是<strong>纯净</strong>的。比如去官方下载Windows镜像，装完后之后桌面只有一个回收站。</p><p>但有过了解装系统的同学可能就会知道，有的镜像装完可能还有360这些软件，但系统的的确确是变了。简单来说，就是这些镜像添加了其他的东西(比如360软件、腾讯、千千静听等等软件)。</p><p>Docker也是这种思路，可以将我们的想要的环境<strong>构建</strong>(打包)成一个镜像，然后我们可以<strong>推送</strong>(发布)到网上去。想要用这个环 境的时候，在网上拉取一份就好了。</p><p>有了Docker，我们在搭环境的时候，跟以前的方式就不一样了。</p><ul><li><strong>之前</strong>：在开发环境构建出了一个war包，想跑到Linux下运行。我们得先在Linux下载好Java、Tomcat、MySQL，配置好对应的环境变量，将war包丢到Tomcat的webapps文件夹下，才能跑起来。</li><li><strong>现在</strong>：在Linux下直接拉取一份镜像(各种环境都配好了)，将镜像运行起来，把war包丢进去就好了。</li></ul><h3 id="解决应用之间隔离"><a href="#解决应用之间隔离" class="headerlink" title="解决应用之间隔离"></a>解决应用之间隔离</h3><p>说到这里，就得提出一个大家可能不认识的概念：LXC(Linux Containers)—&gt;Linux容器。</p>]]></content>
+    
+    
+    <summary type="html">describe why we need to use Docker</summary>
+    
+    
+    
+    
+    <category term="Docker" scheme="http://example.com/tags/Docker/"/>
+    
+  </entry>
+  
+</feed>

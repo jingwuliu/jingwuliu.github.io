@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://example.com/2021/02/07/docker-compose/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2020/12/30/docker-method/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2020/12/17/docker-value/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2021/01/08/jenkins_problem/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2021/01/28/Jenkins-DingTalkPlugin/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2021/01/08/jenkins-join/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2021/01/11/jenkins-multiple-SCMs/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2020/12/30/image-container-relationship/</loc>
+    <lastmod>2021-02-20</lastmod>
+  </url>
+</urlset> 
