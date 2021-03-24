@@ -17,22 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>docker常用基本操作 | Joe Liu的博客</title>
-  <meta name="description" content="本文会总结一些docker的基础用法。 Docker 基础调用docker search (根据关键词搜索镜像文件) docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称    docker pull(下载镜像到本地) docker pull ubuntu　　　　　　　　#下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自由选">
+  <title>Docker常用基本操作 | Joe Liu的博客</title>
+  <meta name="description" content="本文会总结一些docker的基础用法。 Docker 基础调用 docker search (根据关键词搜索镜像文件)  docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称   docker pull(下载镜像到本地)  docker pull ubuntu　　　　　　　　#下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker常用基本操作">
+<meta property="og:title" content="Docker常用基本操作">
 <meta property="og:url" content="http://example.com/2020/12/30/docker-method/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
-<meta property="og:description" content="本文会总结一些docker的基础用法。 Docker 基础调用docker search (根据关键词搜索镜像文件) docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称    docker pull(下载镜像到本地) docker pull ubuntu　　　　　　　　#下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自由选">
+<meta property="og:description" content="本文会总结一些docker的基础用法。 Docker 基础调用 docker search (根据关键词搜索镜像文件)  docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称   docker pull(下载镜像到本地)  docker pull ubuntu　　　　　　　　#下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/12/30/docker-method/docker_search.png">
 <meta property="og:image" content="http://example.com/2020/12/30/docker-method/docker_pull.png">
 <meta property="og:image" content="http://example.com/2020/12/30/docker-method/docker_images.png">
 <meta property="og:image" content="http://example.com/2020/12/30/docker-method/docker_rmi.png">
 <meta property="og:image" content="http://example.com/2020/12/30/docker-method/docker_ps.png">
+<meta property="og:image" content="http://example.com/2020/12/30/docker-method/docker_network_bridge.png">
 <meta property="og:image" content="http://example.com/2020/12/30/docker-method/Dockerfile_build.png">
 <meta property="article:published_time" content="2020-12-30T08:35:07.000Z">
-<meta property="article:modified_time" content="2021-02-20T06:57:10.448Z">
+<meta property="article:modified_time" content="2021-03-16T07:27:11.620Z">
 <meta property="article:author" content="Joe">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Dockerfile">
@@ -219,7 +220,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DingTalk/" rel="tag">DingTalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-compose/" rel="tag">Docker-compose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dockerfile/" rel="tag">Dockerfile</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Join/" rel="tag">Join</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiple-SCMs/" rel="tag">Multiple SCMs</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DingTalk/" rel="tag">DingTalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-compose/" rel="tag">Docker-compose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dockerfile/" rel="tag">Dockerfile</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Join/" rel="tag">Join</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiple-SCMs/" rel="tag">Multiple SCMs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Verdaccio/" rel="tag">Verdaccio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" rel="tag">倒排索引</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -229,7 +230,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/DingTalk/" style="font-size: 13px;">DingTalk</a> <a href="/tags/Docker/" style="font-size: 14px;">Docker</a> <a href="/tags/Docker-compose/" style="font-size: 13.67px;">Docker-compose</a> <a href="/tags/Dockerfile/" style="font-size: 13.33px;">Dockerfile</a> <a href="/tags/Jenkins/" style="font-size: 13.67px;">Jenkins</a> <a href="/tags/Join/" style="font-size: 13px;">Join</a> <a href="/tags/Multiple-SCMs/" style="font-size: 13px;">Multiple SCMs</a>
+      <a href="/tags/DingTalk/" style="font-size: 13px;">DingTalk</a> <a href="/tags/Docker/" style="font-size: 14px;">Docker</a> <a href="/tags/Docker-compose/" style="font-size: 13.67px;">Docker-compose</a> <a href="/tags/Dockerfile/" style="font-size: 13.33px;">Dockerfile</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/Jenkins/" style="font-size: 13.67px;">Jenkins</a> <a href="/tags/Join/" style="font-size: 13px;">Join</a> <a href="/tags/Multiple-SCMs/" style="font-size: 13px;">Multiple SCMs</a> <a href="/tags/Verdaccio/" style="font-size: 13px;">Verdaccio</a> <a href="/tags/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" style="font-size: 13px;">倒排索引</a>
     </div>
   </div>
 
@@ -238,7 +239,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -258,7 +259,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      docker常用基本操作
+      Docker常用基本操作
     </h1>
   
 
@@ -287,76 +288,116 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <p>本文会总结一些docker的基础用法。</p>
-<h2 id="Docker-基础调用"><a href="#Docker-基础调用" class="headerlink" title="Docker 基础调用"></a>Docker 基础调用</h2><h4 id="docker-search-根据关键词搜索镜像文件"><a href="#docker-search-根据关键词搜索镜像文件" class="headerlink" title="docker search (根据关键词搜索镜像文件)"></a><strong>docker search</strong> (根据关键词搜索镜像文件)</h4><blockquote>
+<h2 id="Docker-基础调用">Docker 基础调用</h2>
+<h4 id="docker-search-根据关键词搜索镜像文件"><strong>docker search</strong> (根据关键词搜索镜像文件)</h4>
+<blockquote>
 <p>docker search ubuntu 　　　　　　　　#查看包含“ubuntu”的image的名称</p>
 </blockquote>
-<p><img src="/2020/12/30/docker-method/docker_search.png" alt="docker search ubuntu"> </p>
-<h4 id="docker-pull-下载镜像到本地"><a href="#docker-pull-下载镜像到本地" class="headerlink" title="docker pull(下载镜像到本地)"></a><strong>docker pull</strong>(下载镜像到本地)</h4><blockquote>
+<p><img src="/2020/12/30/docker-method/docker_search.png" alt="docker search ubuntu"></p>
+<h4 id="docker-pull-下载镜像到本地"><strong>docker pull</strong>(下载镜像到本地)</h4>
+<blockquote>
 <p>docker pull ubuntu　　　　　　　　#下载ubuntu:latest至本地(默认会下载最新版本的镜像,也可以自由选择下载镜像的版本，如ubuntu:15.10)。</p>
 </blockquote>
 <p><img src="/2020/12/30/docker-method/docker_pull.png" alt="docker pull ubuntu"></p>
-<h4 id="docker-images-查看本地jenkins所有镜像"><a href="#docker-images-查看本地jenkins所有镜像" class="headerlink" title="docker images(查看本地jenkins所有镜像)"></a><strong>docker images</strong>(查看本地jenkins所有镜像)</h4><blockquote>
+<h4 id="docker-images-查看本地jenkins所有镜像"><strong>docker images</strong>(查看本地jenkins所有镜像)</h4>
+<blockquote>
 <p>docker images　　　　　　　　#列出本地所有镜像及其信息(标签，镜像ID，创建时间，镜像大小)</p>
 </blockquote>
 <p><img src="/2020/12/30/docker-method/docker_images.png" alt="docker images"></p>
-<h4 id="docker-rmi-删除镜像"><a href="#docker-rmi-删除镜像" class="headerlink" title="docker rmi(删除镜像)"></a><strong>docker rmi</strong>(删除镜像)</h4><blockquote>
+<h4 id="docker-rmi-删除镜像"><strong>docker rmi</strong>(删除镜像)</h4>
+<blockquote>
 <p>docker rmi ubuntu　　　　　　　　#删除本地ubuntu镜像</p>
 </blockquote>
 <p><img src="/2020/12/30/docker-method/docker_rmi.png" alt="docker rmi ubuntu"></p>
-<h4 id="docker-run-运行并启动一个新的容器"><a href="#docker-run-运行并启动一个新的容器" class="headerlink" title="docker run(运行并启动一个新的容器)"></a><strong>docker run</strong>(运行并启动一个新的容器)</h4><blockquote>
-<p>docker run -it ubuntu　　　　　　　　#运行并启动一个ubuntu(如检测到本地无所需镜像，将先下载后再创建启动容器)<br>部分常用参数如下</p>
+<h4 id="docker-run-运行并启动一个新的容器"><strong>docker run</strong>(运行并启动一个新的容器)</h4>
+<blockquote>
+<p>docker run -it ubuntu　　　　　　　　#运行并启动一个ubuntu(如检测到本地无所需镜像，将先下载后再创建启动容器)<br>
+部分常用参数如下</p>
 <ul>
 <li>-i: 以交互模式运行容器，通常与-t同时使用；</li>
 <li>-t: 为容器重新分配一个伪输入终端，通常与-i同时使用；</li>
 <li>-p: 指定端口映射，格式为主机端口:容器端口</li>
 <li>-d: 后台运行容器，并返回容器ID；</li>
 <li>-P: 随机端口映射，容器内部端口随机映射到主机端口；</li>
-<li>–name=’docker_test’:为容器指定一个名称；</li>
+<li>–name=‘docker_test’:为容器指定一个名称；</li>
 <li>–volume,-v:绑定一个卷</li>
 </ul>
 </blockquote>
-<h4 id="docker-stop-停止一个容器的运行"><a href="#docker-stop-停止一个容器的运行" class="headerlink" title="docker stop(停止一个容器的运行)"></a><strong>docker stop</strong>(停止一个容器的运行)</h4><blockquote>
+<h4 id="docker-stop-停止一个容器的运行"><strong>docker stop</strong>(停止一个容器的运行)</h4>
+<blockquote>
 <p>docker stop Container_ID　　　　　　　　#停止相关容器运行</p>
 </blockquote>
-<h4 id="docker-rm-删除一个或多个容器"><a href="#docker-rm-删除一个或多个容器" class="headerlink" title="docker rm(删除一个或多个容器)"></a><strong>docker rm</strong>(删除一个或多个容器)</h4><blockquote>
+<h4 id="docker-rm-删除一个或多个容器"><strong>docker rm</strong>(删除一个或多个容器)</h4>
+<blockquote>
 <p>docker rm Container_ID　　　　　　　　#删除相关容器</p>
 </blockquote>
-<h4 id="docker-ps-显示所有容器进程"><a href="#docker-ps-显示所有容器进程" class="headerlink" title="docker ps(显示所有容器进程)"></a><strong>docker ps</strong>(显示所有容器进程)</h4><p><img src="/2020/12/30/docker-method/docker_ps.png" alt="docker ps list"></p>
-<h4 id="docker-logs-查看容器日志"><a href="#docker-logs-查看容器日志" class="headerlink" title="docker logs(查看容器日志)"></a><strong>docker logs</strong>(查看容器日志)</h4><pre><code>&gt;docker logs [OPTIONS] CONTAINER_ID
+<h4 id="docker-ps-显示所有容器进程"><strong>docker ps</strong>(显示所有容器进程)</h4>
+<p><img src="/2020/12/30/docker-method/docker_ps.png" alt="docker ps list"></p>
+<h4 id="docker-logs-查看容器日志"><strong>docker logs</strong>(查看容器日志)</h4>
+<pre><code>&gt;docker logs [OPTIONS] CONTAINER_ID
     Options:
         --details       显示更多信息
      -f,--follow        跟踪实时日志
         --since string  显示自某个timestamp之后的日志
         --tail string   从日志末尾显示多少行日志，默认是all
      -t,--timestamps    显示时间戳
-        --until string  显示自某个timestamp之前的日志</code></pre>
+        --until string  显示自某个timestamp之前的日志
+</code></pre>
 <hr>
-<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>Dockerfile是一个用来构建镜像的文本文件,文本内容包含了一条条构建镜像所需的指令和说明。如果想要使用该镜像的话，还需要使用 <em>docker run</em> 命令来运行这个镜像从而生成容器。</p>
-<h4 id="使用Dockerfile定制镜像"><a href="#使用Dockerfile定制镜像" class="headerlink" title="使用Dockerfile定制镜像"></a>使用Dockerfile定制镜像</h4><p>FROM：定制的镜像都是基于FROM的镜像作为base镜像，后续的操作也都是基于这个base镜像<br>RUN：用于执行后面的命令行命令。</p>
+<h4 id="docker-network-查看docker网络信息"><strong>docker network</strong>(查看docker网络信息)</h4>
+<blockquote>
+<p>docker network ls<br>
+docker提供给我们4种网络模式。当我们完成docker engine的安装以后，docker会在每个engine上生成三种网络，bridge，none和host。</p>
+</blockquote>
+<ul>
+<li>无网络模式–none<br>
+所有加入这个网络模式的container，都不能进行网络通信。</li>
+<li>宿主网络模式–host<br>
+这种网络模式将container与宿主机的网络相通。</li>
+<li>自定义网络<br>
+自定义网络主要包括三种，bridge，overlay，MACVLAN。对于bridge，我们可以自定义，然后就可以实现在一台host上的多个container间的通信，网络模式如下：<br>
+<img src="/2020/12/30/docker-method/docker_network_bridge.png" alt="docker network--bridge">
+<ul>
+<li>Overlay<br>
+我们可以使用“原生态”的swarm来实现“服务发现”和“DNS解析”。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Dockerfile">Dockerfile</h2>
+<p>Dockerfile是一个用来构建镜像的文本文件,文本内容包含了一条条构建镜像所需的指令和说明。如果想要使用该镜像的话，还需要使用 <em>docker run</em> 命令来运行这个镜像从而生成容器。</p>
+<h4 id="使用Dockerfile定制镜像">使用Dockerfile定制镜像</h4>
+<p>FROM：定制的镜像都是基于FROM的镜像作为base镜像，后续的操作也都是基于这个base镜像<br>
+RUN：用于执行后面的命令行命令。</p>
 <ul>
 <li>注意：Dockerfile的每次指令每执行一次都会在docker上新建一层。所以在构建镜像时应尽量减少过多无意义的层。</li>
 </ul>
-<h4 id="开始构建镜像"><a href="#开始构建镜像" class="headerlink" title="开始构建镜像"></a>开始构建镜像</h4><p>我们构建了一个Dockerfile文件，并在文件中添加如下内容：</p>
+<h4 id="开始构建镜像">开始构建镜像</h4>
+<p>我们构建了一个Dockerfile文件，并在文件中添加如下内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx</span><br><span class="line">RUN echo &#39;这是一个本地构建的nginx镜像&#39;</span><br></pre></td></tr></table></figure>
 <p>在Dockerfile文件的存放目录下，使用build执行构建动作。通过下述语句构建了一个nginx:v3的镜像，其中最后的.代表本次执行的上下文路径(docker在构建镜像时，有时想要使用到本机的文件，docker build命令得知路径后，会将路径下的所有内容打包)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t nginx:v3 .</span><br></pre></td></tr></table></figure>
-<p><img src="/2020/12/30/docker-method/Dockerfile_build.png" alt="Dockerfile build"><br>根据上文内容，我们可以看出已经成功构建了一个新的镜像。</p>
-<h4 id="常用指令详解"><a href="#常用指令详解" class="headerlink" title="常用指令详解"></a>常用指令详解</h4><h5 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h5><blockquote>
+<p><img src="/2020/12/30/docker-method/Dockerfile_build.png" alt="Dockerfile build"><br>
+根据上文内容，我们可以看出已经成功构建了一个新的镜像。</p>
+<h4 id="常用指令详解">常用指令详解</h4>
+<h5 id="COPY">COPY</h5>
+<blockquote>
 <p>复制指令，从上下文目录中复制文件或目录到容器里指定路径。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">COPY &lt;源路径&gt; &lt;目标路径&gt;</span><br><span class="line">COPY nginx.conf &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure>
-
-<h5 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h5><blockquote>
+<h5 id="CMD">CMD</h5>
+<blockquote>
 <p>类似于RUN指令，用于运行程序。为启动的容器指定默认要运行的程序，程序运行结束，容器也就结束。如果Dockerfile中存在多个CMD指令，仅最后一个生效</p>
 </blockquote>
 <ul>
 <li>CMD在docker run时运行</li>
-<li>RUN是在docker build时运行<br>格式：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMD &lt;shell 命令&gt;</span><br><span class="line">CMD [&quot;&lt;可执行文件或命令&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]</span><br><span class="line">CMD [&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]　　　# 该写法是为 ENTRYPOINT 指令指定的程序提供默认参数</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>RUN是在docker build时运行<br>
+格式：</li>
 </ul>
-<h5 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h5><blockquote>
-<p>类似于CMD指令，但其不会被docker run的命令行参数指定的指令所覆盖<br>格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMD &lt;shell 命令&gt;</span><br><span class="line">CMD [&quot;&lt;可执行文件或命令&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]</span><br><span class="line">CMD [&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]　　　# 该写法是为 ENTRYPOINT 指令指定的程序提供默认参数</span><br></pre></td></tr></table></figure>
+<h5 id="ENTRYPOINT">ENTRYPOINT</h5>
+<blockquote>
+<p>类似于CMD指令，但其不会被docker run的命令行参数指定的指令所覆盖<br>
+格式：</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [&quot;&lt;executeable&gt;&quot;,&quot;&lt;param1&gt;&quot;,&quot;&lt;param2&gt;&quot;,...]</span><br></pre></td></tr></table></figure>
 <p>假设已通过 Dockerfile 构建了 nginx:test 镜像：</p>
@@ -369,60 +410,73 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run  nginx:test -c &#x2F;etc&#x2F;nginx&#x2F;new.conf</span><br></pre></td></tr></table></figure>
 <p>容器内会默认运行以下命令，启动主进程(/etc/nginx/new.conf:假设容器内已有此文件)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -c &#x2F;etc&#x2F;nginx&#x2F;new.conf</span><br></pre></td></tr></table></figure>
-
-<h5 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h5><blockquote>
-<p>设置环境变量<br>格式：</p>
+<h5 id="ENV">ENV</h5>
+<blockquote>
+<p>设置环境变量<br>
+格式：</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENV &lt;key&gt; &lt;value&gt;</span><br><span class="line">ENV &lt;key1&gt;&#x3D;&lt;value1&gt; &lt;key2&gt;&#x3D;&lt;value2&gt;...</span><br><span class="line">ENV PATH&#x3D;&#39;&#x2F;app&#x2F;pwp&#x2F;am-pwa&#x2F;bin:$&#123;PATH&#125;&#39;</span><br></pre></td></tr></table></figure>
-
-<h5 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h5><blockquote>
-<p>定义匿名数据卷，斌面重要的数据因容器重启而丢失<br>格式：</p>
+<h5 id="VOLUME">VOLUME</h5>
+<blockquote>
+<p>定义匿名数据卷，斌面重要的数据因容器重启而丢失<br>
+格式：</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VOLUME [&quot;&lt;路径1&gt;&quot;, &quot;&lt;路径2&gt;&quot;...]</span><br><span class="line">VOLUME &lt;路径&gt;</span><br></pre></td></tr></table></figure>
-
-<h5 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h5><blockquote>
-<p>声明端口，帮助镜像使用者明确镜像服务的守护端口，以方便配置映射。如果在启动容器时使用的docker run -P，EXPOSE的端口将被随机映射。<br>格式：<br><code>EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]</code></p>
+<h5 id="EXPOSE">EXPOSE</h5>
+<blockquote>
+<p>声明端口，帮助镜像使用者明确镜像服务的守护端口，以方便配置映射。如果在启动容器时使用的docker run -P，EXPOSE的端口将被随机映射。<br>
+格式：<br>
+<code>EXPOSE &lt;端口1&gt; [&lt;端口2&gt;...]</code></p>
 </blockquote>
 <hr>
-<h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><blockquote>
-<p>Compose是用于定义和运行多容器Docker应用程序的工具。通过Compose，可以使用YML文件来配置和整合所有容器需要的服务，然后使用一条命令控制YML文件配置即可创建并启动所有需要的服务。<br>Compose使用的步骤如下：</p>
+<h2 id="Docker-Compose">Docker Compose</h2>
+<blockquote>
+<p>Compose是用于定义和运行多容器Docker应用程序的工具。通过Compose，可以使用YML文件来配置和整合所有容器需要的服务，然后使用一条命令控制YML文件配置即可创建并启动所有需要的服务。<br>
+Compose使用的步骤如下：</p>
 <ul>
 <li>使用Dokcerfile定义容器所需的环境</li>
 <li>使用docker-compose.yml文件定义构成容器所需的服务，保证所有服务在隔离环境中可以一起运行</li>
 <li>执行docker-compose up命令启动并运行整个程序</li>
 </ul>
 </blockquote>
-<h3 id="YML文件配置指令参考"><a href="#YML文件配置指令参考" class="headerlink" title="YML文件配置指令参考"></a>YML文件配置指令参考</h3><h4 id="version"><a href="#version" class="headerlink" title="version"></a>version</h4><p>指定本yml依从的compose哪个版本所制定</p>
-<h4 id="build"><a href="#build" class="headerlink" title="build"></a>build</h4><p>指定为构建镜像上下文路径：<br>例如，指定为从上下文路径./build/client/Dockerfile构建镜像：</p>
+<h3 id="YML文件配置指令参考">YML文件配置指令参考</h3>
+<h4 id="version">version</h4>
+<p>指定本yml依从的compose哪个版本所制定</p>
+<h4 id="build">build</h4>
+<p>指定为构建镜像上下文路径：<br>
+例如，指定为从上下文路径./build/client/Dockerfile构建镜像：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">version: &quot;3.4&quot;</span><br><span class="line">services:</span><br><span class="line">  vue-client:</span><br><span class="line">  build: .&#x2F;build&#x2F;client</span><br></pre></td></tr></table></figure>
-
-<h4 id="command"><a href="#command" class="headerlink" title="command"></a>command</h4><p>覆盖容器启动的默认命令。</p>
-<h4 id="container-name"><a href="#container-name" class="headerlink" title="container_name"></a>container_name</h4><p>指定自定义容器名称，若无自定义名称，则系统将自动生成默认名称。</p>
-<h4 id="environment"><a href="#environment" class="headerlink" title="environment"></a>environment</h4><p>添加环境变量。可以使用数组、字典、任何布尔值。</p>
+<h4 id="command">command</h4>
+<p>覆盖容器启动的默认命令。</p>
+<h4 id="container-name">container_name</h4>
+<p>指定自定义容器名称，若无自定义名称，则系统将自动生成默认名称。</p>
+<h4 id="environment">environment</h4>
+<p>添加环境变量。可以使用数组、字典、任何布尔值。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">environment:</span><br><span class="line">      MONGODB_URL: &quot;mongodb:&#x2F;&#x2F;mongo1:27017&quot;</span><br><span class="line">      MONGODB_DB_NAME: &quot;$&#123;MONGODB_DB_NAME&#125;&quot;</span><br><span class="line">      LM_LICENSE_FILE: &quot;$&#123;MEDA_LM_LICENSE_FILE&#125;&quot;</span><br></pre></td></tr></table></figure>
-
-<h4 id="healthcheck"><a href="#healthcheck" class="headerlink" title="healthcheck"></a>healthcheck</h4><p>用于检测docker服务是否健康运行。</p>
+<h4 id="healthcheck">healthcheck</h4>
+<p>用于检测docker服务是否健康运行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">healthcheck:</span><br><span class="line">  test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http:&#x2F;&#x2F;localhost&quot;] # 设置检测程序</span><br><span class="line">  interval: 1m30s # 设置检测间隔</span><br><span class="line">  timeout: 10s # 设置检测超时时间</span><br><span class="line">  retries: 3 # 设置重试次数</span><br><span class="line">  start_period: 40s # 启动后，多少秒开始启动检测程序</span><br></pre></td></tr></table></figure>
-
-<h4 id="image"><a href="#image" class="headerlink" title="image"></a>image</h4><p>指定容器运行的镜像。</p>
-<h4 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h4><ul>
+<h4 id="image">image</h4>
+<p>指定容器运行的镜像。</p>
+<h4 id="restart">restart</h4>
+<ul>
 <li>no: 默认的重启策略，任何情况下不会重启容器。</li>
 <li>always: 容器总是重新启动。</li>
 <li>on-failure: 在容器非正常退出时会重启容器。</li>
 <li>unless-syopped: 在容器退出时重启容器，但不考虑在docker进程启动时就停止了的容器。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">restart: &quot;no&quot;</span><br><span class="line">restart: always</span><br><span class="line">restart: on-failure</span><br><span class="line">restart: unless-stopped</span><br></pre></td></tr></table></figure>
-
-<h4 id="volumnes"><a href="#volumnes" class="headerlink" title="volumnes"></a>volumnes</h4><p>volumns负责将主机的数据卷或文件挂载到容器里。具体来说，volumns由两种设置方式。</p>
+<h4 id="volumnes">volumnes</h4>
+<p>volumns负责将主机的数据卷或文件挂载到容器里。具体来说，volumns由两种设置方式。</p>
 <ul>
-<li><p>绝对路径</p>
+<li>绝对路径</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ghost:  </span><br><span class="line"></span><br><span class="line">  image: ghost</span><br><span class="line"></span><br><span class="line">  volumes:</span><br><span class="line"></span><br><span class="line">    - .&#x2F;ghost&#x2F;config.js:&#x2F;var&#x2F;lib&#x2F;ghost&#x2F;config.js</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>卷标</p>
+<ul>
+<li>卷标</li>
+</ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line"> mysql:  </span><br><span class="line">  image: mysql</span><br><span class="line">  container_name: mysql</span><br><span class="line">  volumes:</span><br><span class="line">    - mysql:&#x2F;var&#x2F;lib&#x2F;mysql</span><br><span class="line"></span><br><span class="line">volumes:</span><br><span class="line"> mysql:</span><br></pre></td></tr></table></figure>
 <p>第一种方式路径直接挂载到本地，更加直观，但需要管理本地的路径。第二种方式使用卷标的方式，相对简介，但不知道数据存储在本地具体什么位置，需要使用类似 <em>docker volume ls</em> 的方式查看。</p>
-</li>
-</ul>
 
       
     </div>
@@ -432,7 +486,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2020/12/30/docker-method/" title="docker常用基本操作" target="_blank" rel="external">http://example.com/2020/12/30/docker-method/</a>
+      <a href="http://example.com/2020/12/30/docker-method/" title="Docker常用基本操作" target="_blank" rel="external">http://example.com/2020/12/30/docker-method/</a>
     </li>
     
     <li class="post-copyright-license">

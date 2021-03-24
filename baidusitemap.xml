@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://example.com/2021/02/07/docker-compose/</loc>
-    <lastmod>2021-02-20</lastmod>
+    <loc>http://example.com/2021/03/23/elasticsearch-docs/</loc>
+    <lastmod>2021-03-24</lastmod>
   </url>
   <url>
     <loc>http://example.com/2020/12/30/docker-method/</loc>
-    <lastmod>2021-02-20</lastmod>
+    <lastmod>2021-03-16</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2021/02/07/docker-compose/</loc>
+    <lastmod>2021-03-16</lastmod>
+  </url>
+  <url>
+    <loc>http://example.com/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/</loc>
+    <lastmod>2021-02-24</lastmod>
   </url>
   <url>
     <loc>http://example.com/2020/12/17/docker-value/</loc>

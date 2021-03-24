@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Elasticsearch原理介绍 | Joe Liu的博客</title>
+  <meta name="description" content="由于工作中项目需要更换database，所以也开始去了解一些elasticsearch的基础知识。 总的来说，Elasticsearch是一个分布式的存储和搜索引擎，适用于包括文本、数字、结构化和非结构化数据等所有类型的数据，官网速递。首先我们要了解一种索引方式，叫倒排索引。顾名思义，和我们平时生活中常用的索引方式不太一样。就拿背古诗来举例，对于普通的索引方式，往往是以(key-诗名 value-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch原理介绍">
+<meta property="og:url" content="http://example.com/2021/03/23/elasticsearch-docs/index.html">
+<meta property="og:site_name" content="Joe Liu的博客">
+<meta property="og:description" content="由于工作中项目需要更换database，所以也开始去了解一些elasticsearch的基础知识。 总的来说，Elasticsearch是一个分布式的存储和搜索引擎，适用于包括文本、数字、结构化和非结构化数据等所有类型的数据，官网速递。首先我们要了解一种索引方式，叫倒排索引。顾名思义，和我们平时生活中常用的索引方式不太一样。就拿背古诗来举例，对于普通的索引方式，往往是以(key-诗名 value-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/key-value.png">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/new-key-value.png">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/new-key-value3.jpg">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/new-key-value4.png">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/new-key-value5.png">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/elasticsearch-mysql.png">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/elastic-store.png">
+<meta property="og:image" content="http://example.com/2021/03/23/elasticsearch-docs/elastic-search.png">
+<meta property="article:published_time" content="2021-03-23T09:33:26.000Z">
+<meta property="article:modified_time" content="2021-03-24T03:06:36.175Z">
+<meta property="article:author" content="Joe">
+<meta property="article:tag" content="Elasticsearch">
+<meta property="article:tag" content="倒排索引">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/23/elasticsearch-docs/key-value.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/03/23/elasticsearch-docs/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/jingwuliu" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Joe Liu</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Research &amp; Develop</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hefei, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DingTalk/" rel="tag">DingTalk</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker-compose/" rel="tag">Docker-compose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dockerfile/" rel="tag">Dockerfile</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Join/" rel="tag">Join</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Multiple-SCMs/" rel="tag">Multiple SCMs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Verdaccio/" rel="tag">Verdaccio</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" rel="tag">倒排索引</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/DingTalk/" style="font-size: 13px;">DingTalk</a> <a href="/tags/Docker/" style="font-size: 14px;">Docker</a> <a href="/tags/Docker-compose/" style="font-size: 13.67px;">Docker-compose</a> <a href="/tags/Dockerfile/" style="font-size: 13.33px;">Dockerfile</a> <a href="/tags/Elasticsearch/" style="font-size: 13px;">Elasticsearch</a> <a href="/tags/Jenkins/" style="font-size: 13.67px;">Jenkins</a> <a href="/tags/Join/" style="font-size: 13px;">Join</a> <a href="/tags/Multiple-SCMs/" style="font-size: 13px;">Multiple SCMs</a> <a href="/tags/Verdaccio/" style="font-size: 13px;">Verdaccio</a> <a href="/tags/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" style="font-size: 13px;">倒排索引</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-elasticsearch-docs" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Elasticsearch原理介绍
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/03/23/elasticsearch-docs/" class="article-date">
+	  <time datetime="2021-03-23T09:33:26.000Z" itemprop="datePublished">2021-03-23</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a>, <a class="article-tag-link-link" href="/tags/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" rel="tag">倒排索引</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/03/23/elasticsearch-docs/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>由于工作中项目需要更换database，所以也开始去了解一些elasticsearch的基础知识。</p>
+<p>总的来说，Elasticsearch是一个分布式的存储和搜索引擎，适用于包括文本、数字、结构化和非结构化数据等所有类型的数据，<a target="_blank" rel="noopener" href="https://www.elastic.co/cn/">官网速递</a>。<br>首先我们要了解一种索引方式，叫倒排索引。顾名思义，和我们平时生活中常用的索引方式不太一样。就拿背古诗来举例，对于普通的索引方式，往往是以(key-诗名 value-诗文)的方式进行存储和索引的。<br><img src="/2021/03/23/elasticsearch-docs/key-value.png" alt="常规key-value示意图"><br>但是当我们想要通过关键词去寻找相关诗句时，如寻找带有”前”的诗句，由于缺少相关的索引，所以我们只能遍历记忆中的所有诗词，难以在短时间内得到结果，这时就需要我们的倒排索引了。倒排索引又叫反向索引。倒排索引往往会以类似于诗句中的每个字作为索引的key，而诗句内容作为value。即如下方法。<br><img src="/2021/03/23/elasticsearch-docs/new-key-value.png" alt="倒排索引key-value示意图"><br>针对这样的一句诗句，我们就会建立10个索引(诗句中10个字)。相比较而言，原来的正向索引只需要一个索引，而反向需要10个，这样可能会导致我们的存储量爆炸增长。所以我们考虑将数据进行压缩。将key-value的对应更改为(key-关键词 value-诗名)的形式。<br><img src="/2021/03/23/elasticsearch-docs/new-key-value3.jpg" alt="倒排索引key-value新示意图"><br>这样的方式就可以保证减少数据量。相应的，我们也需要形成(key-诗名 value-诗句)的索引矩阵帮助我们寻找。<br><img src="/2021/03/23/elasticsearch-docs/new-key-value4.png" alt="倒排索引key-value新示意图4"><br>可以看到，静夜思和望庐山瀑布中都包含“前”字，而静夜思、月下独酌中都有“月”字，所以我们在对于多首诗建立索引时也可以这样。<br><img src="/2021/03/23/elasticsearch-docs/new-key-value5.png" alt="倒排索引key-value新示意图5"><br>我们日常生活中使用的搜索引擎的原理也是这样的，最核心的都是建立倒排索引。只不过它们的流程稍微复杂一些，还包括网页爬取、停顿词过滤等。停顿词过滤会帮助引擎过滤掉一些诸如“的”、“而”等本身无意义的停顿词，即分词，然后再根据剩余的关键词进行索引。<br>在很早以前，业界有一个叫做<strong>lucene</strong>的库，用来实现倒排索引，后来人们对于lucene进行再次封装，写出了<strong>Elasticsearch</strong>。<br>Elasticsearch将对搜索引擎的操作都封装成了restful的api，通过http请求就可以对其进行操作。想要了解Elasticsearch，我们需要先了解几个专有名词。</p>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>这里说的索引和刚刚说的key索引不是一个概念，elasticsearch中的索引是存放数据的地方，可以理解成mysql中的数据库。</p>
+<h4 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h4><p>类型就是用来定义数据结构的，可以认为是mysql中的一张表。</p>
+<h4 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h4><p>文档可以被认为就是最终的数据了，可以理解成我们每次需要上传的数据都是文档，即一条记录。<br><img src="/2021/03/23/elasticsearch-docs/elasticsearch-mysql.png" alt="elasticsearch-mysql"></p>
+<h4 id="数据存储方式"><a href="#数据存储方式" class="headerlink" title="数据存储方式"></a>数据存储方式</h4><p>比如一首诗，有试题、作者、朝代、字数、诗内容等，首先我们可以建立一个名为poems的索引，试题、作者、朝代都是keyword类型，而诗内容是text类型，字数是interger类型，最后把数据组织成json格式存放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">index</span><br><span class="line">poems</span><br><span class="line"></span><br><span class="line">type</span><br><span class="line">“poem”: &#123; </span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;title&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;keyword&quot;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;author&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;keyword&quot;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;dynasty&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;keyword&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;words&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;interger&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;content&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;text&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">document</span><br><span class="line">&#123;</span><br><span class="line">    &quot;title&quot;: &quot;静夜思&quot;,</span><br><span class="line">    &quot;author&quot;: &quot;李白&quot;,</span><br><span class="line">    &quot;dynasty&quot;: &quot;唐&quot;,</span><br><span class="line">    &quot;words&quot;: &quot;20&quot;,</span><br><span class="line">    &quot;content&quot;: &quot;床前明月光，疑是地上霜，举头望明月，低头思故乡。&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类型相当于表结构的描述，描述每个字段的类型，文档以json形式描述数据。针对上述数据类型，keyword类型是不会分词的，直接根据字符串内容建立反向索引，而text类型存入elasticsearch前会先分词，再根据分词后内容建立倒排索引。而我们只需要给elasticsearch发送http请求就可以成功建立索引。</p>
+<h4 id="Elasticsearch分布式原理"><a href="#Elasticsearch分布式原理" class="headerlink" title="Elasticsearch分布式原理"></a>Elasticsearch分布式原理</h4><p>elasticsearch也会对数据进行切分，同时每一个分片会保存多个副本，从而保证分布式环境下的高可用。<br><img src="/2021/03/23/elasticsearch-docs/elastic-store.png" alt="elastic-store"><br>图中绿色的表示数据块，也可以成为分片(shard)，它保存了索引中所有数据的一部分，即部分数据的容器。文档存放在分片中，分片会被分配到集群的节点上，当集群扩容或缩小，Elasticsearch也会自动在节点间迁移分片，以使集群保持平衡。分片也会被备份生成复制分片存储到多个节点中，每个节点是对等的，节点会通过一些规则选取集群的Master，Master会负责集群状态信息的改变，并同步给其它节点。</p>
+<h4 id="Elasticsearch实战搜索"><a href="#Elasticsearch实战搜索" class="headerlink" title="Elasticsearch实战搜索"></a>Elasticsearch实战搜索</h4><p>假设我们有这样一个集群，我们将数据切分为两块，分别为P0、P1，将P0、P1分别生成两个复制分片并存放于不同的节点上，如图所示。<br><img src="/2021/03/23/elasticsearch-docs/elastic-search.png" alt="elastic-search"><br>假设我们想要去对文档进行索引，索引步骤一般如下：</p>
+<ul>
+<li>客户端给集群中的Master(假设为Node1)发送GET请求。</li>
+<li>节点使用文档提供的_id确定需要被索引的文档包含在分片0中，分片0对应的复制分片在三个节点上都有。此时，它转发请求到Node2。</li>
+<li>Node2返回文档给Node1后将检索结果返回给客户端。</li>
+</ul>
+<h5 id="索引结果字段说明"><a href="#索引结果字段说明" class="headerlink" title="索引结果字段说明"></a>索引结果字段说明</h5><p>最基本的索引就是空搜索，这里不会只当任何的查询条件，这样会返回集群索引中的所有文档。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;_search</span><br></pre></td></tr></table></figure>
+<p>响应内容往往如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;hits&quot; : &#123;</span><br><span class="line">        &quot;total&quot; :       14,</span><br><span class="line">        &quot;hits&quot; : [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;_index&quot;:   &quot;us&quot;,</span><br><span class="line">            &quot;_type&quot;:    &quot;tweet&quot;,</span><br><span class="line">            &quot;_id&quot;:      &quot;7&quot;,</span><br><span class="line">            &quot;_score&quot;:   1,</span><br><span class="line">            &quot;_source&quot;: &#123;</span><br><span class="line">                &quot;date&quot;:    &quot;2014-09-17&quot;,</span><br><span class="line">                &quot;name&quot;:    &quot;John Smith&quot;,</span><br><span class="line">                &quot;tweet&quot;:   &quot;The Query DSL is really powerful and flexible&quot;,</span><br><span class="line">                &quot;user_id&quot;: 2</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        ... 9 RESULTS REMOVED ...</span><br><span class="line">        ],</span><br><span class="line">        &quot;max_score&quot; :   1</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;took&quot; :           4,</span><br><span class="line">    &quot;_shards&quot; : &#123;</span><br><span class="line">        &quot;failed&quot; :      0,</span><br><span class="line">        &quot;successful&quot; :  10,</span><br><span class="line">        &quot;total&quot; :       10</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timed_out&quot; :      false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>hits</strong>:hits包含了total字段来表示匹配到的文档总数，hits数组还会包含匹配到的前10条数据。<br>hits数组中的每个结果都包含_index、_type和文档的_id字段，被加入到_source字段中这意味着在搜索结果中我们将可以直接使用全部文档。这不像其他搜索引擎只返回文档ID，需要你单独去获取文档。<br>每个节点都有一个_score字段作为相关性得分，它衡量了文档与索引的匹配程度。默认的，返回的结果中关联性最大的文档排在首位；由于我们没有指定任何查询，所有文档的相关性是一样的，因此所有的_score都是取得中间值1。<br>max_score指的是所有文档匹配查询中_score的最大值。</p>
+</li>
+<li><p><strong>took</strong>:索引请求花费的毫秒数。</p>
+</li>
+<li><p><strong>shards</strong>:参与索引的分片数量，有多少是成功和失败的。</p>
+</li>
+<li><p><strong>timeout</strong>:返回查询超时与否。timeout不会停止执行索引，仅会告诉在指定timeout内顺利返回结果的节点然后关闭连接。在后台依然可以执行查询。</p>
+</li>
+</ul>
+<h4 id="搜索引擎原理总结"><a href="#搜索引擎原理总结" class="headerlink" title="搜索引擎原理总结"></a>搜索引擎原理总结</h4><ul>
+<li>反向索引又叫倒排索引，是根据文章内容中的关键字建立索引。</li>
+<li>搜索引擎原理就是建立反向索引。</li>
+<li>Elasticsearch 在 Lucene 的基础上进行封装，实现了分布式搜索引擎。</li>
+<li>Elasticsearch 中的索引、类型和文档的概念比较重要，类似于 MySQL 中的数据库、表和行。</li>
+<li>Elasticsearch 也是 Master-slave 架构，也实现了数据的分片和备份。</li>
+</ul>
+<p>开发视图用于描述系统的模块划分和组成，以及细化到内部包的组成设计，服务于开发人员，反映系统开发实施过程。</p>
+<p>本文内容参考于<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62892586">终于有人把Elasticsearch原理讲透了！</a>, <a target="_blank" rel="noopener" href="https://blog.csdn.net/u012834750/article/details/88045861">Elasticsearch系列(六)ES数据搜索之基本流程</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/03/23/elasticsearch-docs/" title="Elasticsearch原理介绍" target="_blank" rel="external">http://example.com/2021/03/23/elasticsearch-docs/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/jingwuliu" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/jingwuliu" target="_blank"><span class="text-dark">Joe Liu</span><small class="ml-1x">Research &amp; Develop</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/" title="Verdaccio介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+    <script>
+(function ($) {
+    $('.search-form').on('submit', function (e) {
+        var keyword = $('.search-form-input[name="wd"]').val();
+        window.location = 'https://www.baidu.com/s?wd=site:example.com ' + keyword;
+        return false;
+    });
+})(jQuery);
+</script>
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

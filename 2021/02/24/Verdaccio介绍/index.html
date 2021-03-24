@@ -17,26 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用 | Joe Liu的博客</title>
-  <meta name="description" content="背景由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：Multiple SCMs Plugin，该插件能实现以下目标：  同时监测多个版本库，其中有一个或多个版本库有新的提交，就能自动触发新的构建。  同时监测的多个版本库可以来自不同的代码管理器，实现混搭，如Github，Bitbucket，Mercurial等。   插件使用插件">
+  <title>Verdaccio介绍 | Joe Liu的博客</title>
+  <meta name="description" content="Verdaccio是一个轻量级、零配置本地私有npm软件包代理注册表。Verdaccio拥有自己的npm私有部署小型数据库，能够代理其它注册表，缓存下载的模块。此外Verdaccio易于扩展存储功能，支持各种社区制作的插件。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用">
-<meta property="og:url" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/index.html">
+<meta property="og:title" content="Verdaccio介绍">
+<meta property="og:url" content="http://example.com/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
-<meta property="og:description" content="背景由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：Multiple SCMs Plugin，该插件能实现以下目标：  同时监测多个版本库，其中有一个或多个版本库有新的提交，就能自动触发新的构建。  同时监测的多个版本库可以来自不同的代码管理器，实现混搭，如Github，Bitbucket，Mercurial等。   插件使用插件">
+<meta property="og:description" content="Verdaccio是一个轻量级、零配置本地私有npm软件包代理注册表。Verdaccio拥有自己的npm私有部署小型数据库，能够代理其它注册表，缓存下载的模块。此外Verdaccio易于扩展存储功能，支持各种社区制作的插件。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/source_code_management.png">
-<meta property="og:image" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/build_triggers.png">
-<meta property="og:image" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/build.png">
-<meta property="article:published_time" content="2021-01-11T01:45:34.000Z">
-<meta property="article:modified_time" content="2021-02-20T06:29:33.577Z">
+<meta property="article:published_time" content="2021-02-24T02:19:42.000Z">
+<meta property="article:modified_time" content="2021-02-24T02:27:09.429Z">
 <meta property="article:author" content="Joe">
-<meta property="article:tag" content="Jenkins">
-<meta property="article:tag" content="Multiple SCMs">
+<meta property="article:tag" content="Verdaccio">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/01/11/jenkins-multiple-SCMs/source_code_management.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2021/01/11/jenkins-multiple-SCMs/index.html">
+  <link rel="canonical" href="http://example.com/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
   
@@ -247,14 +242,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-jenkins-multiple-SCMs" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-Verdaccio介绍" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用
+      Verdaccio介绍
     </h1>
   
 
@@ -262,38 +257,27 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/01/11/jenkins-multiple-SCMs/" class="article-date">
-	  <time datetime="2021-01-11T01:45:34.000Z" itemprop="datePublished">2021-01-11</time>
+	<a href="/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/" class="article-date">
+	  <time datetime="2021-02-24T02:19:42.000Z" itemprop="datePublished">2021-02-24</time>
 	</a>
 </span>
         
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/Jenkins/" rel="tag">Jenkins</a>, <a class="article-tag-link-link" href="/tags/Multiple-SCMs/" rel="tag">Multiple SCMs</a>
+	<a class="article-tag-link-link" href="/tags/Verdaccio/" rel="tag">Verdaccio</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/01/11/jenkins-multiple-SCMs/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>由于项目需要，我们的代码被分为了多个版本库进行管理，但我们希望使用一个Job去同时监控多个版本库，最终我们找到了它：<a target="_blank" rel="noopener" href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs Plugin</a>，该插件能实现以下目标：</p>
-<ul>
-<li><p>同时监测多个版本库，其中有一个或多个版本库有新的提交，就能自动触发新的构建。</p>
-</li>
-<li><p>同时监测的多个版本库可以来自不同的代码管理器，实现混搭，如Github，Bitbucket，Mercurial等。</p>
-</li>
-</ul>
-<h2 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h2><p>插件可以在Manage Jenkins–Manage Plugins里搜索到并进行下载安装。进入Jenkins Job后选择Multiple SCMs，会出现Add SCMs，我们在下拉框中可以选择想要添加的版本库类型。<br><img src="/2021/01/11/jenkins-multiple-SCMs/source_code_management.png" alt="Source_Code_Management"></p>
-<p>在<strong>Build Triggers</strong>中选择上“Build when a change is pushed to BitBucket”和“Build with BitBucket Push and Pull Request Plugin”，并在对应的位置填入需要监测的版本库位置和分支。在Triggers中同样可以加入多个版本库地址进行行为监控。</p>
-<p><img src="/2021/01/11/jenkins-multiple-SCMs/build_triggers.png" alt="Build_Triggers"></p>
-<p>最后在<strong>Build</strong>中选择Execute Shell加入需要执行的命令行内容，这样完整的监控多个版本库并实时CI的过程就基本完成了。</p>
-<p><img src="/2021/01/11/jenkins-multiple-SCMs/build.png" alt="Build"></p>
+        <p>Verdaccio是一个轻量级、零配置本地私有npm软件包代理注册表。Verdaccio拥有自己的npm私有部署小型数据库，能够代理其它注册表，缓存下载的模块。此外Verdaccio易于扩展存储功能，支持各种社区制作的插件。</p>
 
       
     </div>
@@ -303,7 +287,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2021/01/11/jenkins-multiple-SCMs/" title="持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用" target="_blank" rel="external">http://example.com/2021/01/11/jenkins-multiple-SCMs/</a>
+      <a href="http://example.com/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/" title="Verdaccio介绍" target="_blank" rel="external">http://example.com/2021/02/24/Verdaccio%E4%BB%8B%E7%BB%8D/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -350,12 +334,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/2021/01/28/Jenkins-DingTalkPlugin/" title="Jenkins集成钉钉机器人实现在钉钉上发送任务信息"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/2021/03/23/elasticsearch-docs/" title="Elasticsearch原理介绍"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/2021/01/08/jenkins-join/" title="Jenkins下Join插件介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/02/07/docker-compose/" title="docker-compose.yml的基础使用"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
