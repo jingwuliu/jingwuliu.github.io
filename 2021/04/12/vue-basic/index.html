@@ -17,27 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Docker镜像、容器和仓库 | Joe Liu的博客</title>
-  <meta name="description" content="本文将讲解在docker中镜像和容器概念以及两者间的关系。 docker镜像docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。      根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。每">
+  <title>vue basic | Joe Liu的博客</title>
+  <meta name="description" content="slot，也就是插槽，是Vue组件的一块HTML模板，该模板是否显示、如何显示由其父组件决定。插槽是一块模板，从模板种类角度来分，可以分为非插槽模板和插槽模板两类。  非插槽模板是html模板，像div、span、ul、table这些，它们的显示与否以及显示效果是由组件自身控制。 插槽模板是slot，它是一个空壳子，插槽显示的位置由子组件自身决定，slot写在组件template的什么位置，父组件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker镜像、容器和仓库">
-<meta property="og:url" content="http://example.com/2020/12/30/image-container-relationship/index.html">
+<meta property="og:title" content="vue basic">
+<meta property="og:url" content="http://example.com/2021/04/12/vue-basic/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
-<meta property="og:description" content="本文将讲解在docker中镜像和容器概念以及两者间的关系。 docker镜像docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。      根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。每">
+<meta property="og:description" content="slot，也就是插槽，是Vue组件的一块HTML模板，该模板是否显示、如何显示由其父组件决定。插槽是一块模板，从模板种类角度来分，可以分为非插槽模板和插槽模板两类。  非插槽模板是html模板，像div、span、ul、table这些，它们的显示与否以及显示效果是由组件自身控制。 插槽模板是slot，它是一个空壳子，插槽显示的位置由子组件自身决定，slot写在组件template的什么位置，父组件">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image1.png">
-<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image2.png">
-<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image3.png">
-<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_container1.png">
-<meta property="og:image" content="http://example.com/2020/12/30/image-container-relationship/docker_container2.png">
-<meta property="article:published_time" content="2020-12-30T13:28:33.000Z">
-<meta property="article:modified_time" content="2021-02-20T06:23:19.811Z">
+<meta property="article:published_time" content="2021-04-12T06:41:53.000Z">
+<meta property="article:modified_time" content="2021-04-12T07:58:03.222Z">
 <meta property="article:author" content="Joe">
-<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/12/30/image-container-relationship/docker_image1.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2020/12/30/image-container-relationship/index.html">
+  <link rel="canonical" href="http://example.com/2021/04/12/vue-basic/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
   
@@ -248,14 +242,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-image-container-relationship" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-vue-basic" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      Docker镜像、容器和仓库
+      vue basic
     </h1>
   
 
@@ -263,52 +257,40 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2020/12/30/image-container-relationship/" class="article-date">
-	  <time datetime="2020-12-30T13:28:33.000Z" itemprop="datePublished">2020-12-30</time>
+	<a href="/2021/04/12/vue-basic/" class="article-date">
+	  <time datetime="2021-04-12T06:41:53.000Z" itemprop="datePublished">2021-04-12</time>
 	</a>
 </span>
         
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/Docker/" rel="tag">Docker</a>
+	<a class="article-tag-link-link" href="/tags/vue/" rel="tag">vue</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/12/30/image-container-relationship/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/04/12/vue-basic/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>本文将讲解在docker中镜像和容器概念以及两者间的关系。</p>
-<h2 id="docker镜像"><a href="#docker镜像" class="headerlink" title="docker镜像"></a>docker镜像</h2><p>docker的镜像概念类似虚拟机的镜像，可以看作是由多个镜像层叠加起来的文件系统。是一个只读的模板，基于base镜像可以创建新的容器，为指定的镜像添加一个可读写层，构成一个新的容器。</p>
-<p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_image1.png"></div></span></p>
+        <p>slot，也就是插槽，是Vue组件的一块HTML模板，该模板是否显示、如何显示由其父组件决定。插槽是一块模板，从模板种类角度来分，可以分为非插槽模板和插槽模板两类。</p>
+<ul>
+<li>非插槽模板是html模板，像div、span、ul、table这些，它们的显示与否以及显示效果是由组件自身控制。</li>
+<li>插槽模板是slot，它是一个空壳子，插槽显示的位置由子组件自身决定，slot写在组件template的什么位置，父组件传过来的模板就会显示在什么位置。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;father&quot;&gt;</span><br><span class="line">        &lt;h3&gt;父组件&lt;&#x2F;h3&gt;</span><br><span class="line">        &lt;child&gt;</span><br><span class="line">            &lt;div class&#x3D;&quot;temp1&gt;</span><br><span class="line">                &lt;span&gt;menu1&lt;&#x2F;span&gt;</span><br><span class="line">                &lt;span&gt;menu2&lt;&#x2F;span&gt;</span><br><span class="line">            &lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;child&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;child&quot;&gt;</span><br><span class="line">        &lt;h3&gt;子组件&lt;&#x2F;h3&gt;</span><br><span class="line">        &lt;slot&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+<p>在这里，子组件的插槽被父组件下的html模板使用了。所以子组件会变成这样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;temp1&gt;</span><br><span class="line">    &lt;span&gt;menu1&lt;&#x2F;span&gt;</span><br><span class="line">    &lt;span&gt;menu2&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
 
+<h2 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h2><p>匿名插槽没有name属性，插槽加了name属性就变成了具名插槽。它可以在一个组件中出现N次，出现在不同的位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;father&quot;&gt;</span><br><span class="line">    &lt;h3&gt;这里是父组件&lt;&#x2F;h3&gt;</span><br><span class="line">    &lt;child&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;tmpl&quot; slot&#x3D;&quot;up&quot;&gt;</span><br><span class="line">        &lt;span&gt;菜单1&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单2&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单3&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单4&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单5&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单6&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;tmpl&quot; slot&#x3D;&quot;down&quot;&gt;</span><br><span class="line">        &lt;span&gt;菜单-1&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-2&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-3&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-4&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-5&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-6&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;tmpl&quot;&gt;</span><br><span class="line">        &lt;span&gt;菜单-&gt;1&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-&gt;2&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-&gt;3&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-&gt;4&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-&gt;5&lt;&#x2F;span&gt;</span><br><span class="line">        &lt;span&gt;菜单-&gt;6&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;child&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;child&quot;&gt;</span><br><span class="line">    &#x2F;&#x2F; 具名插槽</span><br><span class="line">    &lt;slot name&#x3D;&quot;up&quot;&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">    &lt;h3&gt;子组件&lt;&#x2F;h3&gt;</span><br><span class="line">    &#x2F;&#x2F; 具名插槽</span><br><span class="line">    &lt;slot name&#x3D;&quot;down&quot;&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">    &#x2F;&#x2F; 匿名插槽</span><br><span class="line">    &lt;slot&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
 
-
-
-<p>根据上图，镜像层的主要组成部分是镜像层ID、镜像层指针(指向父层)、元数据(包含docker构建和运行的信息和父层的层次信息)。<br>每一层都包括了一直指向父层的指针。如果一个层没有这个指针，说明它处于最底层。<br><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_image2.png"></div></span></p>
-
-
-<p>镜像是一堆只读层的统一视角，这些只读层重叠在一起，除了最下面一层，其他层都会有一个指针指向下一层。统一文件系统(Union File System)技术能够将不同的层整合成一个文件系统。在用户角度看，只存在一个文件系统。镜像每一层都是只读层。</p>
-<p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_image3.png"></div></span></p>
-
-
-<h2 id="docker容器"><a href="#docker容器" class="headerlink" title="docker容器"></a>docker容器</h2><p>docker容器是由docker镜像创建的运行实例，容器也是一堆层的统一视角，不过容器最上面那一层是可读写的。即<br>容器 = 镜像 + 可读写层</p>
-<p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_container1.png"></div></span></p>
-
-
-<p>一个容器中的进程可以对文件进行创建、修改、删除，这些改变都作用于可读写层。</p>
-<p><span><div align="center"><br><img src="/2020/12/30/image-container-relationship/docker_container2.png"></div></span></p>
-
-
-
-<p>docker容器类似虚拟机，只不过相对于虚拟机，docker守护进程可以直接与主操作系统进行通信，为各个docker容器分配资源，并保证每个容器都可以相互隔离独立，由于docker容器无需臃肿的从操作系统，docker可以节省大量的磁盘空间和其他系统资源。<br>3. docker仓库<br>docker仓库就是用来存放镜像的位置，docker运作中使用的默认仓库是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/">docker hub公共仓库</a>，当用户创建了自己的镜像之后可以用push命令将它上传到共有或私有的仓库。这样下一次再需要使用该镜像时直接使用pull从仓库拉下来就可以了。</p>
-<p>本文部分内容借鉴于：浪仙(<a target="_blank" rel="noopener" href="https://www.cnblogs.com/LangXian/">https://www.cnblogs.com/LangXian/</a>)</p>
-
+<h2 id="作用域插槽-数据插槽"><a href="#作用域插槽-数据插槽" class="headerlink" title="作用域插槽/数据插槽"></a>作用域插槽/数据插槽</h2><p>这样的插槽往往带有动态的数据，需要在slot上绑定数据，<br>父组件提供了样式，但没有提供数据，数据使用的子组件插槽自己绑定的数组。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;father&quot;&gt;</span><br><span class="line">        &lt;h3&gt;父组件&lt;&#x2F;h3&gt;</span><br><span class="line">        &lt;child&gt;</span><br><span class="line">            &lt;template slot-scope&#x3D;&quot;user&quot;&gt;</span><br><span class="line">                &lt;div class&#x3D;&quot;temp1&quot;&gt;</span><br><span class="line">                    &lt;span v-for&#x3D;&quot;item in user.data&quot;&gt;&#123;&#123; item &#125;&#125;&lt;&#x2F;span&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;template&gt;</span><br><span class="line">        &lt;&#x2F;child&gt;</span><br><span class="line"></span><br><span class="line">        &lt;child&gt;</span><br><span class="line">            &lt;template slot-scope&#x3D;&quot;user&quot;&gt;</span><br><span class="line">                &lt;ul&gt;</span><br><span class="line">                    &lt;li v-for&#x3D;&quot;item in user.data&quot;&gt;&#123;&#123; item &#125;&#125;&lt;&#x2F;li&gt;</span><br><span class="line">                &lt;&#x2F;ul&gt;</span><br><span class="line">            &lt;&#x2F;template&gt;</span><br><span class="line">        &lt;&#x2F;child&gt;</span><br><span class="line"></span><br><span class="line">        &lt;child&gt;</span><br><span class="line">            &lt;template slot-scope&#x3D;&quot;user&quot;&gt;</span><br><span class="line">                &#123;&#123; user.data &#125;&#125;</span><br><span class="line">            &lt;&#x2F;template&gt;</span><br><span class="line">        &lt;&#x2F;child&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;child&quot;&gt;</span><br><span class="line">        &lt;h3&gt;子组件&lt;&#x2F;h3&gt;</span><br><span class="line">        &lt;slot :data&#x3D;&quot;data&quot;&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    data: function() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            data: [&#39;zhangsan&#39;,&#39;lisi&#39;,&#39;wanwu&#39;,&#39;zhaoliu&#39;,&#39;tianqi&#39;,&#39;xiaoba&#39;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
       
     </div>
     <div class="article-footer">
@@ -317,7 +299,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2020/12/30/image-container-relationship/" title="Docker镜像、容器和仓库" target="_blank" rel="external">http://example.com/2020/12/30/image-container-relationship/</a>
+      <a href="http://example.com/2021/04/12/vue-basic/" title="vue basic" target="_blank" rel="external">http://example.com/2021/04/12/vue-basic/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -363,13 +345,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2021/01/08/jenkins_problem/" title="Jenkins+Docker+Selenium使用过程中碰到的一些问题"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2020/12/30/docker-method/" title="Docker常用基本操作"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2021/03/23/elasticsearch-docs/" title="Elasticsearch原理介绍"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
