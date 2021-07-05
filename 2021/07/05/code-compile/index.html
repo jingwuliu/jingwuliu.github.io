@@ -17,16 +17,29 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>归档: 2021/1 | Joe Liu的博客</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Joe Liu的博客">
-<meta property="og:url" content="http://example.com/archives/2021/01/index.html">
+  <title>code compile | Joe Liu的博客</title>
+  <meta name="description" content="在版本发出前会有编译的步骤，但是对于编译的具体flow没有明确的概念，只知道是将开发源码转换成机器可读的二进制代码的过程，今天我们来具体了解一下。 简单来说，编译器的作用就是将源文件转换为计算机能直接运行的可执行文件，该可执行文件由一条条的执行指令构成。具体来说，编译源文件需要经过 预处理、编译 、汇编、 链接四个步骤。我们就以hello world程序为例对4步进行介绍。 12345678#in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="code compile">
+<meta property="og:url" content="http://example.com/2021/07/05/code-compile/index.html">
 <meta property="og:site_name" content="Joe Liu的博客">
+<meta property="og:description" content="在版本发出前会有编译的步骤，但是对于编译的具体flow没有明确的概念，只知道是将开发源码转换成机器可读的二进制代码的过程，今天我们来具体了解一下。 简单来说，编译器的作用就是将源文件转换为计算机能直接运行的可执行文件，该可执行文件由一条条的执行指令构成。具体来说，编译源文件需要经过 预处理、编译 、汇编、 链接四个步骤。我们就以hello world程序为例对4步进行介绍。 12345678#in">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/premake1.png">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/premake2.png#pic_center">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/compile.png#pic_center">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/compile1.png">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/compile2.png">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/final_file.png">
+<meta property="og:image" content="http://example.com/2021/07/05/code-compile/conclude.png">
+<meta property="article:published_time" content="2021-07-05T06:01:26.000Z">
+<meta property="article:modified_time" content="2021-07-05T07:18:00.349Z">
 <meta property="article:author" content="Joe">
+<meta property="article:tag" content="编译">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/07/05/code-compile/premake1.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/archives/2021/01/index.html">
+  <link rel="canonical" href="http://example.com/2021/07/05/code-compile/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Joe Liu的博客" type="application/atom+xml">
   
@@ -236,78 +249,130 @@
   
   
 <main class="main" role="main">
-  	<article class="content article article-archives article-type-list" itemscope="">
-	    <header class="article-header">
-	      <h1 itemprop="title">归档: 2021/1</h1>
-	      <p class="text-muted">共 4 篇文章</p>
-	    </header>
-	    <div class="article-body">
-	      
-  
-  
+  <div class="content">
+  <article id="post-code-compile" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
-    
+    <div class="article-header">
       
+        
+  
+    <h1 class="article-title" itemprop="name">
+      code compile
+    </h1>
+  
+
       
-      <section class="panel panel-default b-no">
-        <div class="panel-heading" role="tab">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" href="#collapse2021" aria-expanded="true">
-              <i class="icon icon-calendar-plus text-active"></i><i class="icon icon-calendar-minus text"></i>
-              2021
-            </a>
-            <!-- <a href="/archives/2021" class="archive-year">2021</a> -->
-          </h3>
-        </div>
-        <div id="collapse2021" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2021">
-        <div class="panel-body">
-          <div class="collection">
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/07/05/code-compile/" class="article-date">
+	  <time datetime="2021-07-05T06:01:26.000Z" itemprop="datePublished">2021-07-05</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/%E7%BC%96%E8%AF%91/" rel="tag">编译</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/07/05/code-compile/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>在版本发出前会有编译的步骤，但是对于编译的具体flow没有明确的概念，只知道是将开发源码转换成机器可读的二进制代码的过程，今天我们来具体了解一下。</p>
+<p>简单来说，编译器的作用就是将源文件转换为计算机能直接运行的可执行文件，该可执行文件由一条条的执行指令构成。具体来说，编译源文件需要经过 <font color="#FF0000">预处理</font>、<font color="#FF0000">编译</font> 、<font color="#FF0000">汇编</font>、 <font color="#FF0000">链接</font>四个步骤。我们就以hello world程序为例对4步进行介绍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;hello world\n&quot;); &#x2F;&#x2F;输出hello world</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hello.c文件(源文件)</span><br></pre></td></tr></table></figure>
+
+<h4 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h4><p>预处理是从我们编写的源代码到机器可读文件的第一步，上述源码中第一行的”#”号代表这是一条预处理指令，第一行引入了标准输入输出库，我们称之为头文件，或是库。其次预处理的过程帮助我们删除了多余的注释，如第四行的”//输出hello world”。预处理后的文件会将源码开头中引入的库/头文件内容加入到代码中。并删除注释部分，如下图所示。图中可以看到前面的795行都是stdio.h的代码。</p>
+<p><img src="/2021/07/05/code-compile/premake1.png" alt="预处理后的文件a"></p>
+<p><img src="/2021/07/05/code-compile/premake2.png#pic_center" alt="预处理后的文件b"></p>
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><p>编译过程会将预处理后的文件转换为汇编语言表述的文件，汇编语言就是为了简化繁琐的机器语言编程所创造的一系列助记符。汇编语言和机器指令是一一对应的，如果更换cpu，那就要采用对应的汇编语言。<br>编译阶段首先进行词法分析和语法分析，检查代码的规范性、是否有语法错误等。接下来对代码进行优化，最后生成汇编代码。</p>
+<p><img src="/2021/07/05/code-compile/compile.png#pic_center" alt="编译后产生的汇编代码"></p>
+<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><p>汇编过程就是基于上述与汇编代码对应的机器指令集将汇编代码进行替换的过程，这个过程将汇编代码转换为二进制的目标代码。但目前还不是一个完整的可执行文件，无法运行。还需要最后一步。</p>
+<p><img src="/2021/07/05/code-compile/compile1.png" alt="汇编后产生的二进制目标文件"></p>
+<p><img src="/2021/07/05/code-compile/compile2.png" alt="16进制显示的二进制目标文件"></p>
+<h4 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h4><p>经过汇编后生成的二进制目标文件还不是一个完整的可执行文件，仍然缺少库函数，几乎所有的程序中都要使用各类的标准库中的函数，如C语言中的printf()函数，最上面的源码中只包含了对printf()函数的声明，该函数真正的代码(预编译号的二进制文件)存储在其它地方。<br>除此外，目标文件还缺少启动代码，启动代码充当着程序和操作系统间的接口，不同操作系统所需要的启动代码不同。<br>所以在链接步骤中，我们需要先将源码中使用到的声明的标准库函数的目标代码，启动代码都合入到汇编产生的二进制目标文件中，生成最终版的二进制可执行文件。</p>
+<p><img src="/2021/07/05/code-compile/final_file.png" alt="可执行二进制目标文件"></p>
+<h4 id="汇编-1"><a href="#汇编-1" class="headerlink" title="汇编"></a><font color="#FF0000">汇编</font></h4><p><img src="/2021/07/05/code-compile/conclude.png" alt="编译流程图"></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
     
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/07/05/code-compile/" title="code compile" target="_blank" rel="external">http://example.com/2021/07/05/code-compile/</a>
+    </li>
     
-<a href="/2021/01/28/Jenkins-DingTalkPlugin/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2021-01-28T07:20:25.000Z" itemprop="datePublished">2021-01-28</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Jenkins集成钉钉机器人实现在钉钉上发送任务信息
-</a>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/jingwuliu" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/jingwuliu" target="_blank"><span class="text-dark">Joe Liu</span><small class="ml-1x">Research &amp; Develop</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
 
 
   
-    
-    
-    
-<a href="/2021/01/11/jenkins-multiple-SCMs/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2021-01-11T01:45:34.000Z" itemprop="datePublished">2021-01-11</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> 持续集成之Jenkins插件 Multiple SCMs Plugin搭配使用
-</a>
+</div>
 
-
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
   
+  <ul class="pager pull-left">
     
     
-    
-<a href="/2021/01/08/jenkins-join/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2021-01-08T09:06:48.000Z" itemprop="datePublished">2021-01-08</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Jenkins下Join插件介绍
-</a>
-
-
-  
+    <li class="next">
+      <a href="/2021/04/12/vue-basic/" title="vue basic"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
     
     
-    
-<a href="/2021/01/08/jenkins_problem/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2021-01-08T08:43:50.000Z" itemprop="datePublished">2021-01-08</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> Jenkins+Docker+Selenium使用过程中碰到的一些问题
-</a>
-
-
+  </ul>
   
   
-    </div></div></div></section>
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
   
 
-	    </div>
-  	</article>
-  	 	
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -378,6 +443,37 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
 
 
 
